@@ -1,5 +1,9 @@
-apply plugin: 'com.android.application'
+import groovy.transform.Field
 
+@Field private String aaVersion = '4.2.0'
+
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -19,6 +23,17 @@ android {
     }
 }
 
+apt {
+    arguments {
+        // you should set your package name here if you are using different application IDs
+        // resourcePackageName "your.package.name"
+
+        // You can set optional annotation processing options here, like these commented options:
+        // logLevel 'INFO'
+        // logFile '/var/log/aa.log'
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -26,4 +41,10 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.0.1'
     testCompile 'junit:junit:4.12'
+    compile 'com.karumi:marvelapiclient:0.0.2'
+
+    apt 'org.androidannotations:androidannotations:' + aaVersion
+    compile 'org.androidannotations:androidannotations-api:' + aaVersion
 }
+
+
