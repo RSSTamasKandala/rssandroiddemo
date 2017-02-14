@@ -4,6 +4,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.karumi.marvelapiclient.model.CharacterDto;
+import com.karumi.marvelapiclient.model.CharactersDto;
 import com.karumi.marvelapiclient.model.ComicDto;
 import com.karumi.marvelapiclient.model.ComicsDto;
 
@@ -17,6 +19,7 @@ import org.rss_examples.rssmarveldemo.data.MarvelRepository;
 @EActivity
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+
     @Bean
     MvlErrorListener errorListener;
 
@@ -25,22 +28,40 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getComicList();
+        getCharactersList();
     }
 
     @Background
-    public void getComicList(){
+    protected void getComicList(){
         MarvelRepository.getInstance().getComicList(0, 10, new IResponseListener<ComicsDto>() {
             @Override
             public void onResponse(ComicsDto object) {
-                proccessResponse(object);
+                proccessComicResponse(object);
             }
         },errorListener);
     }
 
+    @Background
+    protected void getCharactersList(){
+        MarvelRepository.getInstance().getCharactersList(0, 10, new IResponseListener<CharactersDto>() {
+            @Override
+            public void onResponse(CharactersDto object) {
+                proccessCharactersResponse(object);
+            }
+        }, errorListener);
+    }
+
     @UiThread
-    public void proccessResponse(ComicsDto object) {
+    protected void proccessCharactersResponse(CharactersDto object) {
+        for (CharacterDto charactersDto:  object.getCharacters()){
+            Log.i(TAG, "proccessCharactersResponse: "+charactersDto.toString());
+        }
+    }
+
+    @UiThread
+    protected void proccessComicResponse(ComicsDto object) {
         for (ComicDto comicDto:  object.getComics()){
-            Log.i(TAG, "proccessResponse: "+ comicDto.toString());
+            Log.i(TAG, "proccessComicResponse: "+ comicDto.toString());
         }
     }
 }
