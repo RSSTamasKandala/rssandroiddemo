@@ -56,6 +56,7 @@ public class MarvelRepository implements IMarvelRepository {
 
         }
     }
+
     @WorkerThread
     @Override
     public void getComicList(int skip, int limit, IResponseListener<ComicsDto> responseListener, IErrorListener errorListener) {
@@ -72,6 +73,7 @@ public class MarvelRepository implements IMarvelRepository {
 
         }
     }
+
     @WorkerThread
     @Override
     public void getCharacter(String id, IResponseListener<CharacterDto> responseListener, IErrorListener errorListener) {

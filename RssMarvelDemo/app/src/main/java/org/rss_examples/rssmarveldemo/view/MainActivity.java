@@ -8,18 +8,14 @@ import com.karumi.marvelapiclient.model.CharactersDto;
 import com.karumi.marvelapiclient.model.ComicDto;
 import com.karumi.marvelapiclient.model.ComicsDto;
 
-import org.androidannotations.annotations.Background;
-import org.androidannotations.annotations.EActivity;
-import org.androidannotations.annotations.UiThread;
 import org.rss_examples.rssmarveldemo.R;
+import org.rss_examples.rssmarveldemo.common.MvlActivity;
 import org.rss_examples.rssmarveldemo.data.IResponseListener;
 import org.rss_examples.rssmarveldemo.data.MarvelRepository;
-import org.rss_examples.rssmarveldemo.common.MvlActivity;
 
-@EActivity
 public class MainActivity extends MvlActivity {
-    private static final String TAG = "MainActivity";
 
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,37 +25,53 @@ public class MainActivity extends MvlActivity {
         getCharactersList();
     }
 
-    @Background
-    protected void getComicList(){
-        MarvelRepository.getInstance().getComicList(0, 10, new IResponseListener<ComicsDto>() {
+    protected void getComicList() {
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(ComicsDto object) {
-                proccessComicResponse(object);
+            public void run() {
+                MarvelRepository.getInstance().getComicList(0, 10, new IResponseListener<ComicsDto>() {
+                    @Override
+                    public void onResponse(final ComicsDto object) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                proccessComicResponse(object);
+                            }
+                        });
+                    }
+                }, errorListener);
             }
-        },errorListener);
+        }).start();
     }
 
-    @Background
-    protected void getCharactersList(){
-        MarvelRepository.getInstance().getCharactersList(0, 10, new IResponseListener<CharactersDto>() {
+    protected void getCharactersList() {
+        new Thread(new Runnable() {
             @Override
-            public void onResponse(CharactersDto object) {
-                proccessCharactersResponse(object);
+            public void run() {
+                MarvelRepository.getInstance().getCharactersList(0, 10, new IResponseListener<CharactersDto>() {
+                    @Override
+                    public void onResponse(final CharactersDto object) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                proccessCharactersResponse(object);
+                            }
+                        });
+                    }
+                }, errorListener);
             }
-        }, errorListener);
+        }).start();
     }
 
-    @UiThread
     protected void proccessCharactersResponse(CharactersDto object) {
-        for (CharacterDto charactersDto:  object.getCharacters()){
-            Log.i(TAG, "proccessCharactersResponse: "+charactersDto.toString());
+        for (CharacterDto charactersDto : object.getCharacters()) {
+            Log.i(TAG, "proccessCharactersResponse: " + charactersDto.toString());
         }
     }
 
-    @UiThread
     protected void proccessComicResponse(ComicsDto object) {
-        for (ComicDto comicDto:  object.getComics()){
-            Log.i(TAG, "proccessComicResponse: "+ comicDto.toString());
+        for (ComicDto comicDto : object.getComics()) {
+            Log.i(TAG, "proccessComicResponse: " + comicDto.toString());
         }
     }
 }

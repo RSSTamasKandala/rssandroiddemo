@@ -2,16 +2,25 @@ package org.rss_examples.rssmarveldemo;
 
 import android.content.Context;
 
-import org.androidannotations.annotations.EBean;
-import org.androidannotations.annotations.RootContext;
 import org.rss_examples.rssmarveldemo.data.IErrorListener;
 
 
-@EBean(scope = EBean.Scope.Singleton)
 public class MvlErrorListener implements IErrorListener {
 
-    @RootContext
-    Context context;
+    private static MvlErrorListener instance;
+
+    private final Context context;
+
+    public static synchronized MvlErrorListener getInstance(Context context) {
+        if (instance == null) {
+            instance = new MvlErrorListener(context);
+        }
+        return instance;
+    }
+
+    private MvlErrorListener(Context context) {
+        this.context = context;
+    }
 
     private static final int MVL_EXCEPTION_CODE = -123456789;
 
