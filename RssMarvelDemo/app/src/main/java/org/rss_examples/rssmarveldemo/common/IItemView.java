@@ -1,13 +1,11 @@
 package org.rss_examples.rssmarveldemo.common;
 
-
 import android.databinding.ViewDataBinding;
 
 import org.rss_examples.rssmarveldemo.RecycleBindingVHolder;
 
-public interface IMvlItemView<V extends ViewDataBinding> extends IMvlView {
+public interface IItemView<B extends ViewDataBinding> {
 
     int getLayoutId();
-
-    void onBindView(RecycleBindingVHolder<V> holder);
+    void onBind(RecycleBindingVHolder<B> holder);
 }

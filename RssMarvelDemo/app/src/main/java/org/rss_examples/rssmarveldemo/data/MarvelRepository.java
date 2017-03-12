@@ -14,9 +14,14 @@ import com.karumi.marvelapiclient.model.ComicsDto;
 import com.karumi.marvelapiclient.model.ComicsQuery;
 import com.karumi.marvelapiclient.model.MarvelResponse;
 
+import org.rss_examples.rssmarveldemo.utils.RestError;
+
+import java.util.concurrent.Callable;
+
+import io.reactivex.Observable;
+
 
 public class MarvelRepository implements IMarvelRepository {
-
 
     private static final String PUBLIC_KEY = "fa953fb06895ce64c1585fd8f577482e";
     private static final String PRIVATE_KEY = "20214c56c461fb07c3e4aa8d257e4d7da2d7b277";
@@ -29,11 +34,9 @@ public class MarvelRepository implements IMarvelRepository {
         MarvelApiConfig marvelApiConfig = new MarvelApiConfig.Builder(PUBLIC_KEY, PRIVATE_KEY).debug().build();
         characterApiClient = new CharacterApiClient(marvelApiConfig);
         comicApiClient = new ComicApiClient(marvelApiConfig);
-
-
     }
 
-    public static MarvelRepository getInstance() {
+    public synchronized static MarvelRepository getInstance() {
         if (instance == null) {
             instance = new MarvelRepository();
         }
@@ -55,6 +58,23 @@ public class MarvelRepository implements IMarvelRepository {
             errorListener.onError(errorListener.getMarvelApiErrorMessage(errorListener.getMarvelApiExceptionCode()));
 
         }
+    }
+
+    @WorkerThread
+    @Override
+    public Observable<ComicsDto> getComicList(final int skip, final int limit) {
+        return  Observable.fromCallable(new Callable<ComicsDto>() {
+            @Override
+            public ComicsDto call() throws Exception {
+                ComicsQuery query = ComicsQuery.Builder.create().withOffset(skip).withLimit(limit).build();
+                MarvelResponse<ComicsDto> all = comicApiClient.getAll(query);
+                if (all.getCode() == SUCCESS_CODE) {
+                    return all.getResponse();
+                } else {
+                    throw new RestError(all.getCode());
+                }
+            }
+        });
     }
 
     @WorkerThread

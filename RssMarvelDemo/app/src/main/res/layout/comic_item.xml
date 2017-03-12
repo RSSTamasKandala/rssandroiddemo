@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="comicItem"
+            type="org.rss_examples.rssmarveldemo.VmComicItem" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp">
+
+        <ImageView
+            android:id="@+id/comic_item_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            bind:loadComicImage="@{comicItem.url}" />
+
+        <TextView
+            android:id="@+id/comic_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/comic_item_image"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@{comicItem.title}" />
+
+        <TextView
+            android:id="@+id/comic_item_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@+id/comic_item_image"
+            android:lines="1"
+            android:ellipsize="end"
+            android:text="@{comicItem.description}" />
+
+    </RelativeLayout>
+</layout>
