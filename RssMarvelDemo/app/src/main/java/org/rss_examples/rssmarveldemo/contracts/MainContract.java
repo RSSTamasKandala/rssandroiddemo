@@ -13,10 +13,9 @@ public interface MainContract {
     public interface MainView extends IMvlView {
 
         List<Fragment> getFragmentList();
+        void setupViewPager();
     }
 
     public interface MainViewModel extends IMvlViewModel {
-
-        void getLists();
     }
 }

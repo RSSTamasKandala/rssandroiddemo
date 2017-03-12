@@ -9,11 +9,13 @@ import java.util.List;
 public class MvlPagerAdapter extends FragmentStatePagerAdapter {
 
     private final List<Fragment> fragments;
+    private final List<String> titles;
 
 
-    public MvlPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+    public MvlPagerAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
         super(fm);
         this.fragments = fragments;
+        this.titles = titles;
     }
 
     @Override
@@ -26,4 +28,8 @@ public class MvlPagerAdapter extends FragmentStatePagerAdapter {
         return fragments.size();
     }
 
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return  titles.get(position);
+    }
 }

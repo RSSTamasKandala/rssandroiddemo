@@ -3,6 +3,7 @@ package org.rss_examples.rssmarveldemo.view.main;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 
 import org.rss_examples.rssmarveldemo.view.characterlist.CharacterListFragment;
 import org.rss_examples.rssmarveldemo.view.comiclist.ComicListFragment;
@@ -17,6 +18,8 @@ import java.util.List;
 
 public class MainActivity extends MvlActivity implements MainContract.MainView {
 
+    private ActivityMainBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,8 +29,10 @@ public class MainActivity extends MvlActivity implements MainContract.MainView {
 
     @Override
     public void bindUI() {
-        ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        binding.mainPager.setAdapter(new MvlPagerAdapter(getSupportFragmentManager(), getFragmentList()));
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding.toolbar.setTitle(getString(R.string.app_name));
+        setSupportActionBar(binding.toolbar);
+        setupViewPager();
     }
 
     @Override
@@ -36,5 +41,15 @@ public class MainActivity extends MvlActivity implements MainContract.MainView {
         fragments.add(new ComicListFragment());
         fragments.add(new CharacterListFragment());
         return fragments;
+    }
+
+    @Override
+    public void setupViewPager() {
+        List<String> titles = new ArrayList<>();
+        titles.add("Comics");
+        titles.add("Characters");
+        binding.mainPager.setAdapter(new MvlPagerAdapter(getSupportFragmentManager(), getFragmentList(), titles));
+        binding.tabs.setupWithViewPager(binding.mainPager, true);
+
     }
 }
