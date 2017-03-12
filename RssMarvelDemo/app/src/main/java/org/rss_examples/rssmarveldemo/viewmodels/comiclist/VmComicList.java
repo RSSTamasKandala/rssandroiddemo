@@ -15,10 +15,6 @@ import java.util.List;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-/**
- * Created by FlashBook on 12/03/2017.
- */
-
 public class VmComicList extends MvlViewModel<ComicListContract.IComicListView> implements ComicListContract.IVmComicList {
 
     @Override

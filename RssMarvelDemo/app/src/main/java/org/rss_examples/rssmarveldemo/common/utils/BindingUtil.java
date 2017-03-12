@@ -11,7 +11,7 @@ import org.rss_examples.rssmarveldemo.R;
 
 public class BindingUtil {
 
-    @BindingAdapter({"bind:loadComicImage"})
+    @BindingAdapter({"bind:loadImage"})
     public static void loadComicImage(ImageView imageView, String url) {
         Glide.with(imageView.getContext())
                 .load(url)

@@ -21,7 +21,6 @@ import java.util.List;
 public class CharacterListFragment extends MvlFragment implements CharacterListContract.ICharacterListView {
 
 
-    private VmCharacterList viewmodel;
     private CharacterListBinding binding;
     private MvlAdapter adapter;
 
@@ -30,16 +29,21 @@ public class CharacterListFragment extends MvlFragment implements CharacterListC
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        binding = DataBindingUtil.inflate(inflater, R.layout.character_list, container, true);
-        viewmodel = new VmCharacterList();
-        viewmodel.setView(this);
-        binding.setViewmodel(viewmodel);
+        binding = DataBindingUtil.inflate(
+                inflater,
+                R.layout.character_list,
+                container,
+                true);
+
         bindUI();
         return binding.getRoot();
     }
 
     @Override
     public void bindUI() {
+        VmCharacterList viewmodel = new VmCharacterList();
+        viewmodel.setView(this);
+        binding.setViewmodel(viewmodel);
         binding.characterlist.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MvlAdapter();
         binding.characterlist.setAdapter(adapter);

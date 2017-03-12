@@ -1,6 +1,6 @@
 package org.rss_examples.rssmarveldemo.data;
 
-public interface IResponseListener<T extends Object> {
+interface IResponseListener<T> {
 
     void onResponse(T object);
 

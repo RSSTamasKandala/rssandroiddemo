@@ -5,15 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import org.rss_examples.rssmarveldemo.common.superclasses.RecycleBindingVHolder;
 import org.rss_examples.rssmarveldemo.common.interfaces.IMvlItemView;
+import org.rss_examples.rssmarveldemo.common.superclasses.RecycleBindingVHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MvlAdapter extends RecyclerView.Adapter<RecycleBindingVHolder> {
 
-    List<IMvlItemView> itemViews = new ArrayList<>();
+    private List<IMvlItemView> itemViews = new ArrayList<>();
 
     public void setItemViews(List<IMvlItemView> itemViews) {
         this.itemViews.addAll(itemViews);

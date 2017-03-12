@@ -3,13 +3,7 @@ package org.rss_examples.rssmarveldemo.viewmodels.characterlist;
 import com.karumi.marvelapiclient.model.CharacterDto;
 
 import org.rss_examples.rssmarveldemo.common.superclasses.MvlItemViewModel;
-import org.rss_examples.rssmarveldemo.common.superclasses.MvlViewModel;
 import org.rss_examples.rssmarveldemo.contracts.CharacterItemContract;
-import org.rss_examples.rssmarveldemo.view.characterlist.CharacterItemView;
-
-/**
- * Created by FlashBook on 12/03/2017.
- */
 
 public class VmCharacterItem extends MvlItemViewModel<CharacterItemContract.ICharacterItemView> implements CharacterItemContract.IVmCharacter {
 

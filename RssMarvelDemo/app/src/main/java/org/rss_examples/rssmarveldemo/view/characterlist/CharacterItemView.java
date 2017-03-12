@@ -8,17 +8,12 @@ import org.rss_examples.rssmarveldemo.contracts.CharacterItemContract;
 import org.rss_examples.rssmarveldemo.databinding.CharacterItemBinding;
 import org.rss_examples.rssmarveldemo.viewmodels.characterlist.VmCharacterItem;
 
-/**
- * Created by FlashBook on 12/03/2017.
- */
 
 public class CharacterItemView implements CharacterItemContract.ICharacterItemView<CharacterItemBinding> {
 
-    CharacterDto characterItem;
     private final VmCharacterItem vmCharacterItem;
 
     public CharacterItemView(CharacterDto characterItem) {
-        this.characterItem = characterItem;
         vmCharacterItem = new VmCharacterItem(characterItem);
 
     }
