@@ -14,11 +14,14 @@ import com.karumi.marvelapiclient.model.ComicsDto;
 import com.karumi.marvelapiclient.model.ComicsQuery;
 import com.karumi.marvelapiclient.model.MarvelResponse;
 
-import org.rss_examples.rssmarveldemo.utils.RestError;
+import org.rss_examples.rssmarveldemo.common.utils.RestError;
 
 import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 
 public class MarvelRepository implements IMarvelRepository {
@@ -43,27 +46,30 @@ public class MarvelRepository implements IMarvelRepository {
         return instance;
     }
 
-    @WorkerThread
-    @Override
-    public void getCharactersList(int skip, int limit, IResponseListener<CharactersDto> responseListener, IErrorListener errorListener) {
-        CharactersQuery query = CharactersQuery.Builder.create().withOffset(skip).withLimit(limit).build();
-        try {
-            MarvelResponse<CharactersDto> all = characterApiClient.getAll(query);
-            if (all.getCode() == SUCCESS_CODE) {
-                responseListener.onResponse(all.getResponse());
-            } else {
-                errorListener.onError(errorListener.getRequestFailedMessage(all.getCode()));
-            }
-        } catch (MarvelApiException e) {
-            errorListener.onError(errorListener.getMarvelApiErrorMessage(errorListener.getMarvelApiExceptionCode()));
 
-        }
+    @Override
+    public void getCharactersList(final int skip, final int limit, Observer<CharactersDto> observer) {
+        Observable.fromCallable(new Callable<CharactersDto>() {
+            @Override
+            public CharactersDto call() throws Exception {
+                CharactersQuery query = CharactersQuery.Builder.create().withOffset(skip).withLimit(limit).build();
+                MarvelResponse<CharactersDto> all = characterApiClient.getAll(query);
+                if (all.getCode() == SUCCESS_CODE) {
+                    return all.getResponse();
+                } else {
+                    throw new RestError(all.getCode());
+                }
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
     }
 
     @WorkerThread
     @Override
-    public Observable<ComicsDto> getComicList(final int skip, final int limit) {
-        return  Observable.fromCallable(new Callable<ComicsDto>() {
+    public void getComicList(final int skip, final int limit, Observer<ComicsDto> observer) {
+        Observable.fromCallable(new Callable<ComicsDto>() {
             @Override
             public ComicsDto call() throws Exception {
                 ComicsQuery query = ComicsQuery.Builder.create().withOffset(skip).withLimit(limit).build();
@@ -74,28 +80,17 @@ public class MarvelRepository implements IMarvelRepository {
                     throw new RestError(all.getCode());
                 }
             }
-        });
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+
     }
 
-    @WorkerThread
-    @Override
-    public void getComicList(int skip, int limit, IResponseListener<ComicsDto> responseListener, IErrorListener errorListener) {
-        ComicsQuery query = ComicsQuery.Builder.create().withOffset(skip).withLimit(limit).build();
-        try {
-            MarvelResponse<ComicsDto> all = comicApiClient.getAll(query);
-            if (all.getCode() == SUCCESS_CODE) {
-                responseListener.onResponse(all.getResponse());
-            } else {
-                errorListener.onError(errorListener.getRequestFailedMessage(all.getCode()));
-            }
-        } catch (MarvelApiException e) {
-            errorListener.onError(errorListener.getMarvelApiErrorMessage(errorListener.getMarvelApiExceptionCode()));
 
-        }
-    }
+
 
     @WorkerThread
-    @Override
     public void getCharacter(String id, IResponseListener<CharacterDto> responseListener, IErrorListener errorListener) {
         try {
             MarvelResponse<CharacterDto> response = characterApiClient.getCharacter(id);
@@ -112,7 +107,6 @@ public class MarvelRepository implements IMarvelRepository {
     }
 
     @WorkerThread
-    @Override
     public void getComic(String id, IResponseListener<ComicDto> responseListener, IErrorListener errorListener) {
         try {
             MarvelResponse<ComicDto> response = comicApiClient.getComic(id);

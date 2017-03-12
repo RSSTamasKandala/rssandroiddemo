@@ -1,11 +1,11 @@
-package org.rss_examples.rssmarveldemo;
+package org.rss_examples.rssmarveldemo.common.superclasses;
 
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 
 public class RecycleBindingVHolder<V extends ViewDataBinding> extends RecyclerView.ViewHolder {
 
-    protected V itemView;
+    private V itemView;
 
     public RecycleBindingVHolder(V itemView) {
         super(itemView.getRoot());

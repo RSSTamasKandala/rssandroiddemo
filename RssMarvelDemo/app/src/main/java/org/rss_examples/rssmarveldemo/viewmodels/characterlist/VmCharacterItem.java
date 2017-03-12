@@ -1,0 +1,31 @@
+package org.rss_examples.rssmarveldemo.viewmodels.characterlist;
+
+import com.karumi.marvelapiclient.model.CharacterDto;
+
+import org.rss_examples.rssmarveldemo.common.superclasses.MvlItemViewModel;
+import org.rss_examples.rssmarveldemo.common.superclasses.MvlViewModel;
+import org.rss_examples.rssmarveldemo.contracts.CharacterItemContract;
+import org.rss_examples.rssmarveldemo.view.characterlist.CharacterItemView;
+
+/**
+ * Created by FlashBook on 12/03/2017.
+ */
+
+public class VmCharacterItem extends MvlItemViewModel<CharacterItemContract.ICharacterItemView> implements CharacterItemContract.IVmCharacter {
+
+    private CharacterDto characterDto;
+
+    public VmCharacterItem(CharacterDto characterDto) {
+        this.characterDto = characterDto;
+    }
+
+    @Override
+    public String getPicUrl() {
+        return characterDto.getThumbnail().getPath() + "." + characterDto.getThumbnail().getExtension();
+    }
+
+    @Override
+    public String getName() {
+        return characterDto.getName();
+    }
+}

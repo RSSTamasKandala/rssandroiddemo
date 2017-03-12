@@ -1,4 +1,4 @@
-package org.rss_examples.rssmarveldemo;
+package org.rss_examples.rssmarveldemo.common.utils;
 
 import android.databinding.BindingAdapter;
 import android.support.v4.content.ContextCompat;
@@ -6,6 +6,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import org.rss_examples.rssmarveldemo.R;
 
 public class BindingUtil {
 

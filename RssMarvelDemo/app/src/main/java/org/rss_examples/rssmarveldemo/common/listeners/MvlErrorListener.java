@@ -1,7 +1,8 @@
-package org.rss_examples.rssmarveldemo;
+package org.rss_examples.rssmarveldemo.common.listeners;
 
 import android.content.Context;
 
+import org.rss_examples.rssmarveldemo.R;
 import org.rss_examples.rssmarveldemo.data.IErrorListener;
 
 

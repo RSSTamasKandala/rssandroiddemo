@@ -1,4 +1,4 @@
-package org.rss_examples.rssmarveldemo.adapters;
+package org.rss_examples.rssmarveldemo.common.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,16 +7,16 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainPagerAdapter extends FragmentStatePagerAdapter {
+public class MvlPagerAdapter extends FragmentStatePagerAdapter {
 
     private final List<Fragment> fragments;
 
-    public MainPagerAdapter(FragmentManager fm) {
+    public MvlPagerAdapter(FragmentManager fm) {
         super(fm);
         fragments= new ArrayList<>();
     }
 
-    public MainPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
+    public MvlPagerAdapter(FragmentManager fm, List<Fragment> fragments) {
         this(fm);
         this.fragments.addAll(fragments);
     }

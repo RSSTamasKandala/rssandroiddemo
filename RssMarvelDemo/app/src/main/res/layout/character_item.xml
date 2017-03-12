@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="comicItem"
-            type="org.rss_examples.rssmarveldemo.viewmodels.comiclist.VmComicItem" />
+            name="viewmodel"
+            type="org.rss_examples.rssmarveldemo.viewmodels.characterlist.VmCharacterItem" />
     </data>
 
     <RelativeLayout
@@ -18,30 +18,20 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            bind:loadComicImage="@{comicItem.url}" />
+            bind:loadComicImage="@{viewmodel.picUrl}" />
 
         <TextView
             android:id="@+id/comic_item_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginRight="10dp"
             android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/comic_item_image"
             android:lines="1"
+            android:gravity="center"
             android:ellipsize="end"
-            android:text="@{comicItem.title}" />
+            android:text="@{viewmodel.name}" />
 
-        <TextView
-            android:id="@+id/comic_item_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_toRightOf="@+id/comic_item_image"
-            android:lines="1"
-            android:ellipsize="end"
-            android:text="@{comicItem.description}" />
 
     </RelativeLayout>
 </layout>

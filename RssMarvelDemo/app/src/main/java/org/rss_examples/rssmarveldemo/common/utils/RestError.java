@@ -1,4 +1,4 @@
-package org.rss_examples.rssmarveldemo.utils;
+package org.rss_examples.rssmarveldemo.common.utils;
 
 public class RestError extends Exception {
 

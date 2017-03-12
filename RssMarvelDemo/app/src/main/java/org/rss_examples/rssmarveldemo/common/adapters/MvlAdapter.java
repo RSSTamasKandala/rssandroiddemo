@@ -1,17 +1,17 @@
-package org.rss_examples.rssmarveldemo.adapters;
+package org.rss_examples.rssmarveldemo.common.adapters;
 
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
-import org.rss_examples.rssmarveldemo.RecycleBindingVHolder;
-import org.rss_examples.rssmarveldemo.common.IMvlItemView;
+import org.rss_examples.rssmarveldemo.common.superclasses.RecycleBindingVHolder;
+import org.rss_examples.rssmarveldemo.common.interfaces.IMvlItemView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComicAdapter extends RecyclerView.Adapter<RecycleBindingVHolder> {
+public class MvlAdapter extends RecyclerView.Adapter<RecycleBindingVHolder> {
 
     List<IMvlItemView> itemViews = new ArrayList<>();
 
