@@ -1,5 +1,7 @@
 package org.rss_examples.rssmarveldemo.viewmodels.comiclist;
 
+import android.view.View;
+
 import com.karumi.marvelapiclient.model.ComicDto;
 
 import org.rss_examples.rssmarveldemo.common.superclasses.MvlItemViewModel;
@@ -22,5 +24,11 @@ public class VmComicItem extends MvlItemViewModel<ComicItemContract.IComictemVie
     @Override
     public String getName() {
         return data.getTitle();
+    }
+
+    @Override
+    public void onItemClick(View view) {
+        super.onItemClick(view);
+        this.mvlItemView.onItemClick(view);
     }
 }

@@ -1,5 +1,7 @@
 package org.rss_examples.rssmarveldemo.viewmodels.characterlist;
 
+import android.view.View;
+
 import com.karumi.marvelapiclient.model.CharacterDto;
 
 import org.rss_examples.rssmarveldemo.common.superclasses.MvlItemViewModel;
@@ -21,5 +23,11 @@ public class VmCharacterItem extends MvlItemViewModel<CharacterItemContract.ICha
     @Override
     public String getName() {
         return characterDto.getName();
+    }
+
+    @Override
+    public void onItemClick(View view) {
+        super.onItemClick(view);
+        this.mvlItemView.onItemClick(view);
     }
 }
