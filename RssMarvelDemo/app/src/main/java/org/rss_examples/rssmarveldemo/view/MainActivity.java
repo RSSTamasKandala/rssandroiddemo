@@ -1,129 +1,33 @@
 package org.rss_examples.rssmarveldemo.view;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.widget.Toast;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 
-import com.karumi.marvelapiclient.model.CharacterDto;
-import com.karumi.marvelapiclient.model.CharactersDto;
-import com.karumi.marvelapiclient.model.ComicDto;
-import com.karumi.marvelapiclient.model.ComicsDto;
-
-import org.rss_examples.rssmarveldemo.ComicItem;
+import org.rss_examples.rssmarveldemo.ComicFragment;
 import org.rss_examples.rssmarveldemo.R;
-import org.rss_examples.rssmarveldemo.VmComicItem;
-import org.rss_examples.rssmarveldemo.adapters.ComicAdapter;
+import org.rss_examples.rssmarveldemo.adapters.MainPagerAdapter;
 import org.rss_examples.rssmarveldemo.common.MvlActivity;
-import org.rss_examples.rssmarveldemo.data.IResponseListener;
-import org.rss_examples.rssmarveldemo.data.MarvelRepository;
 
-import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends MvlActivity {
-
-    private static final String TAG = "MainActivity";
-
-    private ComicAdapter comicAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.main_pager);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.comic_list);
-
-        comicAdapter = new ComicAdapter();
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(comicAdapter);
-
-        getComicList();
-        getRxComicList();
-        getCharactersList();
+        viewPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), getFragments()));
     }
 
-    private void getRxComicList() {
-        MarvelRepository.getInstance()
-                .getComicList(0, 20)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ComicsDto>() {
-                    @Override
-                    public void onSubscribe(Disposable d) {
-                        Toast.makeText(MainActivity.this, "getRxComicList Started", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onNext(ComicsDto value) {
-                        proccessComicResponse(value);
-                        for (ComicDto comic : value.getComics()) {
-                            comicAdapter.addItemView(new ComicItem(new VmComicItem(comic)));
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Toast.makeText(MainActivity.this, e.toString(), Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onComplete() {
-                        Toast.makeText(MainActivity.this, "getRxComicList Complete", Toast.LENGTH_SHORT).show();
-                    }
-                });
+    private List<Fragment> getFragments() {
+        List<Fragment> result = new ArrayList<>();
+        result.add(new ComicFragment());
+        result.add(new ComicFragment());
+        return result;
     }
 
-    protected void getComicList() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                MarvelRepository.getInstance().getComicList(0, 10, new IResponseListener<ComicsDto>() {
-                    @Override
-                    public void onResponse(final ComicsDto object) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                proccessComicResponse(object);
-                            }
-                        });
-                    }
-                }, errorListener);
-            }
-        }).start();
-    }
-
-    protected void getCharactersList() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                MarvelRepository.getInstance().getCharactersList(0, 10, new IResponseListener<CharactersDto>() {
-                    @Override
-                    public void onResponse(final CharactersDto object) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                proccessCharactersResponse(object);
-                            }
-                        });
-                    }
-                }, errorListener);
-            }
-        }).start();
-    }
-
-    protected void proccessCharactersResponse(CharactersDto object) {
-        for (CharacterDto charactersDto : object.getCharacters()) {
-            Log.i(TAG, "proccessCharactersResponse: " + charactersDto.toString());
-        }
-    }
-
-    protected void proccessComicResponse(ComicsDto object) {
-        for (ComicDto comicDto : object.getComics()) {
-            Log.i(TAG, "proccessComicResponse: " + comicDto.toString());
-        }
-    }
 }

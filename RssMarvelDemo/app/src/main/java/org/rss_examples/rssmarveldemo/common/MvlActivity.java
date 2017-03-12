@@ -6,6 +6,6 @@ import org.rss_examples.rssmarveldemo.MvlErrorListener;
 
 public abstract class MvlActivity extends AppCompatActivity {
 
-    protected MvlErrorListener errorListener = MvlErrorListener.getInstance(this);
+    public MvlErrorListener errorListener = MvlErrorListener.getInstance(this);
 
 }
