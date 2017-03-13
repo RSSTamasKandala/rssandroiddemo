@@ -121,4 +121,23 @@ public class MarvelRepository implements IMarvelRepository {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
+
+    @Override
+    public Observable<ComicsDto> getComicListByCharacter(final int characterId, final int skip, final int limit) {
+        return Observable
+                .fromCallable(new Callable<ComicsDto>() {
+                    @Override
+                    public ComicsDto call() throws Exception {
+                        ComicsQuery query = ComicsQuery.Builder.create().addCharacter(characterId).withOffset(skip).withLimit(limit).build();
+                        MarvelResponse<ComicsDto> all = comicApiClient.getAll(query);
+                        if (all.getCode() == SUCCESS_CODE) {
+                            return all.getResponse();
+                        } else {
+                            throw new RestError(all.getCode());
+                        }
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 }

@@ -6,7 +6,6 @@ import com.karumi.marvelapiclient.model.ComicDto;
 import com.karumi.marvelapiclient.model.ComicsDto;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 
 
 interface IMarvelRepository {
@@ -19,5 +18,7 @@ interface IMarvelRepository {
     Observable<CharacterDto> getCharacter(String id);
 
     Observable<ComicDto> getComic(String id);
+
+    Observable<ComicsDto> getComicListByCharacter(int characterId,int skip,int limit);
 
 }
