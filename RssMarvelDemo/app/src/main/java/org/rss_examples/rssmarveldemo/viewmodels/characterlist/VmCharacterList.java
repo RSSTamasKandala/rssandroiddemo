@@ -17,11 +17,10 @@ import io.reactivex.disposables.Disposable;
 
 public class VmCharacterList extends MvlViewModel<CharacterListContract.ICharacterListView> implements CharacterListContract.IVmCharacterList {
 
-
     @Override
-    public void getChatacterList() {
+    public void getCharacterList() {
         mvlView.showLoading(true);
-        MarvelRepository.getInstance().getCharactersList(0, 20, new Observer<CharactersDto>() {
+        MarvelRepository.getInstance().getCharactersList(0, 20).subscribe(new Observer<CharactersDto>() {
             @Override
             public void onSubscribe(Disposable d) {
 

@@ -47,7 +47,7 @@ public class CharacterListFragment extends MvlFragment implements CharacterListC
         binding.characterlist.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MvlAdapter();
         binding.characterlist.setAdapter(adapter);
-        viewmodel.getChatacterList();
+        viewmodel.getCharacterList();
 
     }
 

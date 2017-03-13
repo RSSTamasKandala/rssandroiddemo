@@ -13,6 +13,6 @@ public interface CharacterListContract {
     }
 
     public interface IVmCharacterList extends IMvlViewModel{
-        void getChatacterList();
+        void getCharacterList();
     }
 }

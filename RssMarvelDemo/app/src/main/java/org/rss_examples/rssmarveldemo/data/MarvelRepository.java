@@ -5,7 +5,6 @@ import android.support.annotation.WorkerThread;
 import com.karumi.marvelapiclient.CharacterApiClient;
 import com.karumi.marvelapiclient.ComicApiClient;
 import com.karumi.marvelapiclient.MarvelApiConfig;
-import com.karumi.marvelapiclient.MarvelApiException;
 import com.karumi.marvelapiclient.model.CharacterDto;
 import com.karumi.marvelapiclient.model.CharactersDto;
 import com.karumi.marvelapiclient.model.CharactersQuery;
@@ -19,7 +18,6 @@ import org.rss_examples.rssmarveldemo.common.utils.RestError;
 import java.util.concurrent.Callable;
 
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -46,79 +44,81 @@ public class MarvelRepository implements IMarvelRepository {
         return instance;
     }
 
-
-    @Override
-    public void getCharactersList(final int skip, final int limit, Observer<CharactersDto> observer) {
-        Observable.fromCallable(new Callable<CharactersDto>() {
-            @Override
-            public CharactersDto call() throws Exception {
-                CharactersQuery query = CharactersQuery.Builder.create().withOffset(skip).withLimit(limit).build();
-                MarvelResponse<CharactersDto> all = characterApiClient.getAll(query);
-                if (all.getCode() == SUCCESS_CODE) {
-                    return all.getResponse();
-                } else {
-                    throw new RestError(all.getCode());
-                }
-            }
-        })
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
-    }
-
     @WorkerThread
     @Override
-    public void getComicList(final int skip, final int limit, Observer<ComicsDto> observer) {
-        Observable.fromCallable(new Callable<ComicsDto>() {
-            @Override
-            public ComicsDto call() throws Exception {
-                ComicsQuery query = ComicsQuery.Builder.create().withOffset(skip).withLimit(limit).build();
-                MarvelResponse<ComicsDto> all = comicApiClient.getAll(query);
-                if (all.getCode() == SUCCESS_CODE) {
-                    return all.getResponse();
-                } else {
-                    throw new RestError(all.getCode());
-                }
-            }
-        })
+    public Observable<CharactersDto> getCharactersList(final int skip, final int limit) {
+        return Observable
+                .fromCallable(new Callable<CharactersDto>() {
+                    @Override
+                    public CharactersDto call() throws Exception {
+                        CharactersQuery query = CharactersQuery.Builder.create().withOffset(skip).withLimit(limit).build();
+                        MarvelResponse<CharactersDto> all = characterApiClient.getAll(query);
+                        if (all.getCode() == SUCCESS_CODE) {
+                            return all.getResponse();
+                        } else {
+                            throw new RestError(all.getCode());
+                        }
+                    }
+                })
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(observer);
-
-    }
-
-
-
-
-    @WorkerThread
-    public void getCharacter(String id, IResponseListener<CharacterDto> responseListener, IErrorListener errorListener) {
-        try {
-            MarvelResponse<CharacterDto> response = characterApiClient.getCharacter(id);
-            if (response.getCode() == SUCCESS_CODE) {
-                responseListener.onResponse(response.getResponse());
-            } else {
-                errorListener.onError(errorListener.getRequestFailedMessage(response.getCode()));
-            }
-        } catch (MarvelApiException e) {
-            errorListener.onError(errorListener.getMarvelApiErrorMessage(errorListener.getMarvelApiExceptionCode()));
-
-        }
-
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     @WorkerThread
-    public void getComic(String id, IResponseListener<ComicDto> responseListener, IErrorListener errorListener) {
-        try {
-            MarvelResponse<ComicDto> response = comicApiClient.getComic(id);
-            if (response.getCode() == SUCCESS_CODE) {
-                responseListener.onResponse(response.getResponse());
-            } else {
-                errorListener.onError(errorListener.getRequestFailedMessage(response.getCode()));
-            }
-        } catch (MarvelApiException e) {
-            errorListener.onError(errorListener.getMarvelApiErrorMessage(errorListener.getMarvelApiExceptionCode()));
+    @Override
+    public Observable<ComicsDto> getComicList(final int skip, final int limit) {
+        return Observable
+                .fromCallable(new Callable<ComicsDto>() {
+                    @Override
+                    public ComicsDto call() throws Exception {
+                        ComicsQuery query = ComicsQuery.Builder.create().withOffset(skip).withLimit(limit).build();
+                        MarvelResponse<ComicsDto> all = comicApiClient.getAll(query);
+                        if (all.getCode() == SUCCESS_CODE) {
+                            return all.getResponse();
+                        } else {
+                            throw new RestError(all.getCode());
+                        }
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 
-        }
+    @WorkerThread
+    @Override
+    public Observable<CharacterDto> getCharacter(final String id) {
+        return Observable
+                .fromCallable(new Callable<CharacterDto>() {
+                    @Override
+                    public CharacterDto call() throws Exception {
+                        MarvelResponse<CharacterDto> response = characterApiClient.getCharacter(id);
+                        if (response.getCode() == SUCCESS_CODE) {
+                            return response.getResponse();
+                        } else {
+                            throw new RestError(response.getCode());
+                        }
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
 
+    @WorkerThread
+    @Override
+    public Observable<ComicDto> getComic(final String id) {
+        return Observable
+                .fromCallable(new Callable<ComicDto>() {
+                    @Override
+                    public ComicDto call() throws Exception {
+                        MarvelResponse<ComicDto> response = comicApiClient.getComic(id);
+                        if (response.getCode() == SUCCESS_CODE) {
+                            return response.getResponse();
+                        } else {
+                            throw new RestError(response.getCode());
+                        }
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

@@ -20,7 +20,7 @@ public class VmComicList extends MvlViewModel<ComicListContract.IComicListView> 
     @Override
     public void getComicList() {
         mvlView.showLoading(true);
-        MarvelRepository.getInstance().getComicList(0, 20, new Observer<ComicsDto>() {
+        MarvelRepository.getInstance().getComicList(0, 20).subscribe(new Observer<ComicsDto>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -39,7 +39,6 @@ public class VmComicList extends MvlViewModel<ComicListContract.IComicListView> 
             @Override
             public void onError(Throwable e) {
                 mvlView.showError(e.getMessage());
-
             }
 
             @Override

@@ -16,6 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".view.comicdetail.ComicDetailActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".view.characterdetail.CharacterDetailActivity"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>
