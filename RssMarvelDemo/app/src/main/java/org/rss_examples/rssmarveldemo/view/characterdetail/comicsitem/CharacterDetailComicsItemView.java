@@ -2,7 +2,7 @@ package org.rss_examples.rssmarveldemo.view.characterdetail.comicsitem;
 
 import android.view.View;
 
-import com.karumi.marvelapiclient.model.ComicResourceDto;
+import com.karumi.marvelapiclient.model.ComicDto;
 
 import org.rss_examples.rssmarveldemo.R;
 import org.rss_examples.rssmarveldemo.common.superclasses.RecycleBindingVHolder;
@@ -13,7 +13,7 @@ public class CharacterDetailComicsItemView implements CharacterComicsItemContrac
 
     private final VmCharacterDetailComicsItem vm;
 
-    public CharacterDetailComicsItemView(ComicResourceDto dto) {
+    public CharacterDetailComicsItemView(ComicDto dto) {
         vm = new VmCharacterDetailComicsItem(dto);
     }
 

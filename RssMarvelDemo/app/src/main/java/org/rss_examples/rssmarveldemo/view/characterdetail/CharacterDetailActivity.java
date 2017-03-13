@@ -4,29 +4,39 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.karumi.marvelapiclient.model.CharacterDto;
-import com.karumi.marvelapiclient.model.ComicResourceDto;
-import com.karumi.marvelapiclient.model.MarvelResources;
-import com.karumi.marvelapiclient.model.StoryResourceDto;
+import com.karumi.marvelapiclient.model.ComicDto;
+import com.karumi.marvelapiclient.model.ComicsDto;
 
 import org.rss_examples.rssmarveldemo.R;
 import org.rss_examples.rssmarveldemo.common.adapters.MvlAdapter;
+import org.rss_examples.rssmarveldemo.common.adapters.MvlPagerAdapter;
 import org.rss_examples.rssmarveldemo.common.superclasses.MvlActivity;
 import org.rss_examples.rssmarveldemo.contracts.CharacterDetailContract;
 import org.rss_examples.rssmarveldemo.databinding.CharacterDetailActivityBinding;
 import org.rss_examples.rssmarveldemo.view.characterdetail.comicsitem.CharacterDetailComicsItemView;
+import org.rss_examples.rssmarveldemo.view.characterdetail.pages.CharacterDetailInfoFragment;
 import org.rss_examples.rssmarveldemo.view.utils.CircleTransform;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CharacterDetailActivity extends MvlActivity implements CharacterDetailContract.ICharacterDetailView {
 
     private static final String EXTRA_CHARACTER_ID = "character_id";
     private MvlAdapter mvlAdapter;
+    private MvlPagerAdapter mvlPagerAdapter;
     private CharacterDetailActivityBinding binding;
+
+    private boolean isExpanded = false;
 
     public static void startActivity(Context context, String characterID) {
         Intent intent = new Intent(context, CharacterDetailActivity.class);
@@ -51,12 +61,20 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
         binding.characterDetailBotList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.characterDetailBotList.setAdapter(mvlAdapter);
         viewModel.getCharacterData(getIntent().getExtras().getString(EXTRA_CHARACTER_ID, ""));
+        viewModel.getCharactersComicsList(Integer.valueOf(getIntent().getExtras().getString(EXTRA_CHARACTER_ID, "")));
+
+        binding.characterDetailPageMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isExpanded = !isExpanded;
+                pageExpanded(isExpanded);
+            }
+        });
     }
 
     @Override
     public void showCharacterInfo(CharacterDto value) {
-        setupViewPager(value.getStories());
-        setupComicsList(value.getComics());
+        setupViewPager(value);
 
         binding.characterDetailToolbarName.setText(value.getName());
         binding.characterDetailToolbarRealname.setText(value.getDescription());
@@ -76,14 +94,57 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
     }
 
     @Override
-    public void setupViewPager(MarvelResources<StoryResourceDto> collections) {
+    public void setupViewPager(CharacterDto value) {
+        List<Fragment> pages = new ArrayList<>();
+        List<String> titles = new ArrayList<>();
+
+        titles.add("BIOGRAPHY");
+        titles.add("STATS");
+        titles.add("EVENTS");
+        titles.add("STORIES");
+
+        pages.add(CharacterDetailInfoFragment.createWithText(value.getDescription()));
+        pages.add(CharacterDetailInfoFragment.createWithText(value.getDescription()));
+        pages.add(CharacterDetailInfoFragment.createWithText(value.getDescription()));
+        pages.add(CharacterDetailInfoFragment.createWithText(value.getDescription()));
+
+        mvlPagerAdapter = new MvlPagerAdapter(getSupportFragmentManager(), pages, titles);
+        binding.characterDetailPager.setAdapter(mvlPagerAdapter);
+        binding.characterDetailPager.setOffscreenPageLimit(mvlPagerAdapter.getCount());
 
     }
 
     @Override
-    public void setupComicsList(MarvelResources<ComicResourceDto> comics) {
-        for (ComicResourceDto dto : comics.getItems()) {
+    public void setupComicsList(ComicsDto comics) {
+        for (ComicDto dto : comics.getComics()) {
             mvlAdapter.addItemView(new CharacterDetailComicsItemView(dto));
+        }
+    }
+
+    public void pageExpanded(boolean b) {
+        changeFragmentsTextHeights(b);
+
+        ViewGroup.LayoutParams paramsPager = binding.characterDetailPager.getLayoutParams();
+        if (b) {
+            paramsPager.height = binding.characterDetailPager.getHeight() * 2;
+        } else {
+            paramsPager.height = binding.characterDetailPager.getHeight() / 2;
+        }
+        binding.characterDetailPager.requestLayout();
+    }
+
+    private void changeFragmentsTextHeights(boolean b) {
+        for (Fragment fragment : mvlPagerAdapter.getFragments()) {
+            if (((CharacterDetailInfoFragment) fragment).textView != null) {
+                View view = ((CharacterDetailInfoFragment) fragment).textView;
+                ViewGroup.LayoutParams params = view.getLayoutParams();
+                if (b) {
+                    params.height = view.getHeight() * 2;
+                } else {
+                    params.height = view.getHeight() / 2;
+                }
+                view.requestLayout();
+            }
         }
     }
 }

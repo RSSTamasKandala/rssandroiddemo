@@ -11,6 +11,9 @@ public class MvlPagerAdapter extends FragmentStatePagerAdapter {
     private final List<Fragment> fragments;
     private final List<String> titles;
 
+    public List<Fragment> getFragments() {
+        return fragments;
+    }
 
     public MvlPagerAdapter(FragmentManager fm, List<Fragment> fragments, List<String> titles) {
         super(fm);
@@ -32,4 +35,5 @@ public class MvlPagerAdapter extends FragmentStatePagerAdapter {
     public CharSequence getPageTitle(int position) {
         return  titles.get(position);
     }
+
 }

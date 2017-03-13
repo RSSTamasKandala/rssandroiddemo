@@ -2,7 +2,7 @@ package org.rss_examples.rssmarveldemo.view.characterdetail.comicsitem;
 
 import android.view.View;
 
-import com.karumi.marvelapiclient.model.ComicResourceDto;
+import com.karumi.marvelapiclient.model.ComicDto;
 
 import org.rss_examples.rssmarveldemo.common.superclasses.MvlItemViewModel;
 import org.rss_examples.rssmarveldemo.contracts.CharacterComicsItemContract;
@@ -10,10 +10,10 @@ import org.rss_examples.rssmarveldemo.contracts.CharacterComicsItemContract;
 public class VmCharacterDetailComicsItem extends MvlItemViewModel<CharacterComicsItemContract.ICharacterComicstemView>
         implements CharacterComicsItemContract.IVmCharacterComicsItem{
 
-    private final ComicResourceDto comicResourceDto;
+    private final ComicDto dto;
 
-    public VmCharacterDetailComicsItem(ComicResourceDto comicResourceDto) {
-        this.comicResourceDto = comicResourceDto;
+    public VmCharacterDetailComicsItem(ComicDto dto) {
+        this.dto = dto;
     }
 
     @Override
@@ -23,6 +23,6 @@ public class VmCharacterDetailComicsItem extends MvlItemViewModel<CharacterComic
 
     @Override
     public String getPicUrl() {
-        return comicResourceDto.getResourceUri();
+        return dto.getThumbnail().getPath() + "." + dto.getThumbnail().getExtension();
     }
 }

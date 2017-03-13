@@ -90,8 +90,17 @@
                 <android.support.v4.view.ViewPager
                     android:id="@+id/character_detail_pager"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="110dp"
+                    android:layout_below="@+id/character_detail_tabs"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+                <ImageView
+                    android:id="@+id/character_detail_page_more"
+                    android:layout_width="40dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/character_detail_pager"
+                    android:layout_centerHorizontal="true"
+                    android:src="@android:drawable/star_big_off"/>
 
             </RelativeLayout>
 
