@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,6 +113,44 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
         mvlPagerAdapter = new MvlPagerAdapter(getSupportFragmentManager(), pages, titles);
         binding.characterDetailPager.setAdapter(mvlPagerAdapter);
         binding.characterDetailPager.setOffscreenPageLimit(mvlPagerAdapter.getCount());
+
+        for (String s : titles) {
+            binding.characterDetailTabs.addTab(binding.characterDetailTabs.newTab().setText(s));
+        }
+
+        binding.characterDetailTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                binding.characterDetailPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                binding.characterDetailPager.setCurrentItem(tab.getPosition());
+            }
+        });
+
+        binding.characterDetailPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                binding.characterDetailTabs.setScrollPosition(position,0f,true);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 

@@ -84,6 +84,8 @@
                     android:id="@+id/character_detail_tabs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="50dp"
+                    app:tabIndicatorHeight="0dp"
                     app:tabGravity="fill"
                     app:tabMode="fixed" />
 
@@ -98,6 +100,7 @@
                     android:id="@+id/character_detail_page_more"
                     android:layout_width="40dp"
                     android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
                     android:layout_below="@+id/character_detail_pager"
                     android:layout_centerHorizontal="true"
                     android:src="@android:drawable/star_big_off"/>
