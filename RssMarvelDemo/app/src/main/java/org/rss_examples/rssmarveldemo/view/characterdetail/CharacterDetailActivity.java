@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.transition.TransitionManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -163,6 +164,8 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
 
     public void pageExpanded(boolean b) {
         changeFragmentsTextHeights(b);
+
+        TransitionManager.beginDelayedTransition(binding.characterDetailLayout);
 
         ViewGroup.LayoutParams paramsPager = binding.characterDetailPager.getLayoutParams();
         if (b) {
