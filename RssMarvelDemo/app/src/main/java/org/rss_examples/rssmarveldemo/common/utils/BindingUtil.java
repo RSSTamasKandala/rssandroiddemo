@@ -8,6 +8,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import org.rss_examples.rssmarveldemo.R;
+import org.rss_examples.rssmarveldemo.view.utils.CircleTransform;
 
 public class BindingUtil {
 
@@ -16,6 +17,7 @@ public class BindingUtil {
         Glide.with(imageView.getContext())
                 .load(url)
                 .placeholder(ContextCompat.getDrawable(imageView.getContext(), R.mipmap.ic_launcher))
+                .bitmapTransform(new CircleTransform(imageView.getContext()))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
     }

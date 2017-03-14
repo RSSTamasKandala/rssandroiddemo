@@ -1,11 +1,13 @@
 package org.rss_examples.rssmarveldemo.view.characterdetail;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.transition.TransitionManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -41,10 +43,16 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
 
     private boolean isExpanded = false;
 
-    public static void startActivity(Context context, String characterID) {
-        Intent intent = new Intent(context, CharacterDetailActivity.class);
+    public static void startActivity(String characterID, View view) {
+        Intent intent = new Intent(view.getContext(), CharacterDetailActivity.class);
         intent.putExtra(CharacterDetailActivity.EXTRA_CHARACTER_ID, characterID);
-        context.startActivity(intent);
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    (Activity) view.getContext(), view, view.getTransitionName());
+            ActivityCompat.startActivity(view.getContext(), intent, options.toBundle());
+        } else {
+            view.getContext().startActivity(intent);
+        }
     }
 
     @Override
@@ -144,7 +152,7 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
 
             @Override
             public void onPageSelected(int position) {
-                binding.characterDetailTabs.setScrollPosition(position,0f,true);
+                binding.characterDetailTabs.setScrollPosition(position, 0f, true);
             }
 
             @Override
