@@ -13,6 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
+        android:background="@android:color/black"
         android:onClick="@{comicItem.onItemClick}">
 
         <ImageView
@@ -33,6 +34,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:lines="1"
+            android:textColor="@android:color/white"
             android:text="@{comicItem.name}"
             android:transitionName="@string/comic_item_text"/>
 

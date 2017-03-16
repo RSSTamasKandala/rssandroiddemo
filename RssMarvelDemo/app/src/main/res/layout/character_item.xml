@@ -13,6 +13,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:onClick="@{viewmodel.onItemClick}"
+        android:background="@android:color/black"
         android:layout_height="70dp">
 
         <ImageView
@@ -33,6 +34,7 @@
             android:layout_toRightOf="@+id/comic_item_image"
             android:lines="1"
             android:gravity="center"
+            android:textColor="@android:color/white"
             android:ellipsize="end"
             android:text="@{viewmodel.name}" />
 
