@@ -2,10 +2,8 @@ package org.rss_examples.rssmarveldemo.view;
 
 import android.view.View;
 
-import com.karumi.marvelapiclient.model.CharacterDto;
-
 import org.rss_examples.rssmarveldemo.view.characterdetail.CharacterDetailActivity;
-import org.rss_examples.rssmarveldemo.view.comicdetail.ComicComicDetailActivity;
+import org.rss_examples.rssmarveldemo.view.comicdetail.ComicDetailActivity;
 
 public class MvlNavigator implements INavigator {
 
@@ -23,11 +21,11 @@ public class MvlNavigator implements INavigator {
 
     @Override
     public void startComicDetail(String comicId, View view, View textView) {
-        ComicComicDetailActivity.startActivity(comicId, view, textView);
+        ComicDetailActivity.startActivity(comicId, view, textView);
     }
 
     @Override
-    public void startCharacterDetail(CharacterDto characterDto, View view, View textView) {
-        CharacterDetailActivity.startActivity(characterDto.getId(), view, textView);
+    public void startCharacterDetail(String characterId, View view, View textView) {
+        CharacterDetailActivity.startActivity(characterId, view, textView);
     }
 }

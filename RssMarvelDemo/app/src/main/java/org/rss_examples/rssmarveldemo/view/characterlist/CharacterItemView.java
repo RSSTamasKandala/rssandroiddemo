@@ -32,18 +32,16 @@ public class CharacterItemView implements CharacterItemContract.ICharacterItemVi
         return R.layout.character_item;
     }
 
-
     @Override
     public void onBindView(RecycleBindingVHolder<CharacterItemBinding> holder) {
         vmCharacterItem.setView(this);
         holder.getViewDataBinding().setViewmodel(vmCharacterItem);
         imageView = holder.getViewDataBinding().comicItemImage;
         textView = holder.getViewDataBinding().comicItemTitle;
-
     }
 
     @Override
     public void onItemClick(View view) {
-        MvlNavigator.getInstance().startCharacterDetail(character, imageView, textView);
+        MvlNavigator.getInstance().startCharacterDetail(character.getId(), imageView, textView);
     }
 }

@@ -21,6 +21,6 @@ interface IMarvelRepository {
 
     Observable<ComicsDto> getComicListByCharacter(int characterId,int skip,int limit);
 
-    Observable<CharactersDto> getCharecterListByComic(final int skip, final int limit,int comicId);
+    Observable<CharactersDto> getCharacterListByComic(final int skip, final int limit, int comicId);
 
 }
