@@ -20,7 +20,7 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            bind:loadImage="@{comicItem.picUrl}" />
+            bind:loadImage="@{comicItem.picUrl}"/>
 
         <TextView
             android:id="@+id/comic_item_title"
@@ -32,7 +32,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:lines="1"
-            android:text="@{comicItem.name}" />
+            android:text="@{comicItem.name}"/>
 
 
     </RelativeLayout>

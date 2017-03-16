@@ -17,7 +17,25 @@
             android:id="@+id/comic_item_image"
             android:layout_width="140dp"
             android:layout_height="200dp"
-            bind:loadImage="@{comicsItem.picUrl}" />
+            android:scaleType="fitXY"
+            bind:loadSimpleImage="@{comicsItem.picUrl}" />
+
+        <ImageView
+            android:id="@+id/comic_item_image_side"
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:scaleType="fitXY"
+            android:layout_toRightOf="@+id/comic_item_image"
+            android:src="@drawable/comic_shadow_side"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:src="@drawable/comic_shadow_bot"
+            android:layout_below="@+id/comic_item_image"
+            android:scaleType="fitXY"
+            android:layout_toLeftOf="@+id/comic_item_image_side"/>
 
     </RelativeLayout>
 </layout>

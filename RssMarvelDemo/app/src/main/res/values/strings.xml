@@ -2,5 +2,9 @@
     <string name="app_name">RssMarvelDemo</string>
     <string name="request_failed_msg">Request failed</string>
     <string name="marvel_api_error_msg">marvel api error</string>
-    <string name="character_item">character_Item</string>
+    <string name="character_item_image">character_item_image</string>
+    <string name="character_item_text">character_item_text</string>
+    <string name="comic_item_text">comic_item_text</string>
+    <string name="comic_item_text2">comic_item_text2</string>
+    <string name="comic_item_image">comic_item_image</string>
 </resources>

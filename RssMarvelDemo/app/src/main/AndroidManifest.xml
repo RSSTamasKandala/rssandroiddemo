@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.comicdetail.ComicDetailActivity"
+        <activity android:name=".view.comicdetail.ComicComicDetailActivity"
             android:screenOrientation="portrait"/>
 
         <activity android:name=".view.characterdetail.CharacterDetailActivity"

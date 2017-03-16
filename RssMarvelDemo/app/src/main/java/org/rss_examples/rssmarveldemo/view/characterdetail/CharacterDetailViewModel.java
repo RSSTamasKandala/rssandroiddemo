@@ -1,5 +1,7 @@
 package org.rss_examples.rssmarveldemo.view.characterdetail;
 
+import android.view.View;
+
 import com.karumi.marvelapiclient.model.CharacterDto;
 import com.karumi.marvelapiclient.model.ComicsDto;
 
@@ -11,6 +13,8 @@ import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
 public class CharacterDetailViewModel extends MvlViewModel<CharacterDetailContract.ICharacterDetailView> implements CharacterDetailContract.ICharacterDetailViewModel {
+
+    private CharacterDto characterDto;
 
     @Override
     public void getCharacterData(String id) {
@@ -24,6 +28,8 @@ public class CharacterDetailViewModel extends MvlViewModel<CharacterDetailContra
                     @Override
                     public void onNext(CharacterDto value) {
                         if (mvlView != null) {
+                            characterDto = value;
+                            getPicUrl();
                             mvlView.showCharacterInfo(value);
                         }
                     }
@@ -66,5 +72,28 @@ public class CharacterDetailViewModel extends MvlViewModel<CharacterDetailContra
 
                     }
                 });
+    }
+
+    @Override
+    public String getPicUrl() {
+        if (characterDto != null) {
+            return characterDto.getThumbnail().getPath() + "." + characterDto.getThumbnail().getExtension();
+        } else {
+            return "";
+        }
+    }
+
+    @Override
+    public void onArrowClick(View view) {
+        if (mvlView != null) {
+            mvlView.onArrowClick();
+        }
+    }
+
+    @Override
+    public void onBackClick(View view) {
+        if (mvlView != null) {
+            mvlView.onBackClick();
+        }
     }
 }

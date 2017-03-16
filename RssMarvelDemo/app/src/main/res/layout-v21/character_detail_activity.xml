@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,8 +10,8 @@
     </data>
 
     <android.support.v4.widget.NestedScrollView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/character_detail_layout"
@@ -26,6 +26,13 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/button_back"
+                android:onClick="@{characterDetail.onBackClick}"/>
 
             <RelativeLayout
                 android:id="@+id/character_detail_toolbar"
@@ -42,38 +49,23 @@
                     android:layout_marginLeft="50dp"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/circle_shape"
-                    android:transitionName="@string/character_item"
-                    android:padding="2dp" />
+                    android:padding="2dp"
+                    bind:loadCircleImage="@{characterDetail.picUrl}"
+                    android:transitionName="@string/character_item_image" />
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/character_detail_toolbar_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/character_detail_toolbar_image"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/character_detail_toolbar_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:fontFamily="monospace"
-                        android:lines="1"
-                        android:text="SPIDER-MAN"
-                        android:textColor="@android:color/white"
-                        android:textSize="18sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/character_detail_toolbar_realname"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:lines="1"
-                        android:text="Peter Benjamin Parker"
-                        android:textColor="@android:color/white" />
-
-                </LinearLayout>
+                    android:ellipsize="end"
+                    android:fontFamily="monospace"
+                    android:lines="1"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:transitionName="@string/character_item_text" />
 
             </RelativeLayout>
 
@@ -84,30 +76,37 @@
                 android:layout_below="@+id/character_detail_toolbar"
                 android:animateLayoutChanges="true">
 
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/character_detail_tabs"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/character_detail_description_text"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="50dp"
-                    app:tabIndicatorHeight="0dp"
-                    app:tabGravity="fill"
-                    app:tabMode="fixed" />
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/black"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="10dp"
+                    android:text="DESCRIPTION"/>
 
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/character_detail_pager"
+                <TextView
+                    android:id="@+id/character_detail_desc"
                     android:layout_width="match_parent"
-                    android:layout_height="110dp"
-                    android:layout_below="@+id/character_detail_tabs"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/character_detail_description_text"
+                    android:layout_marginLeft="50dp"
+                    android:layout_marginRight="50dp"
+                    android:ellipsize="end"
+                    android:maxLines="4" />
 
                 <ImageView
                     android:id="@+id/character_detail_page_more"
                     android:layout_width="40dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/character_detail_pager"
+                    android:layout_height="20dp"
+                    android:layout_below="@+id/character_detail_desc"
                     android:layout_centerHorizontal="true"
-                    android:src="@android:drawable/star_big_off"/>
+                    android:layout_marginTop="10dp"
+                    android:onClick="@{characterDetail.onArrowClick}"
+                    android:src="@drawable/vector_drawable_end" />
 
             </RelativeLayout>
 
@@ -147,8 +146,8 @@
                 android:id="@+id/character_detail_bot_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="50dp"
-                android:layout_below="@+id/character_detail_comics" />
+                android:layout_below="@+id/character_detail_comics"
+                android:layout_marginLeft="50dp" />
 
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>

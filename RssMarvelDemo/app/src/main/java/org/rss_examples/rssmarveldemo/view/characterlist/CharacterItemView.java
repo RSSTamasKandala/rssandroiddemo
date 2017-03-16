@@ -1,7 +1,8 @@
 package org.rss_examples.rssmarveldemo.view.characterlist;
 
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.karumi.marvelapiclient.model.CharacterDto;
 
@@ -18,10 +19,12 @@ public class CharacterItemView implements CharacterItemContract.ICharacterItemVi
     private final VmCharacterItem vmCharacterItem;
     private final CharacterDto character;
 
+    private ImageView imageView;
+    private TextView textView;
+
     public CharacterItemView(CharacterDto characterItem) {
         this.character = characterItem;
         vmCharacterItem = new VmCharacterItem(characterItem);
-
     }
 
     @Override
@@ -34,11 +37,13 @@ public class CharacterItemView implements CharacterItemContract.ICharacterItemVi
     public void onBindView(RecycleBindingVHolder<CharacterItemBinding> holder) {
         vmCharacterItem.setView(this);
         holder.getViewDataBinding().setViewmodel(vmCharacterItem);
+        imageView = holder.getViewDataBinding().comicItemImage;
+        textView = holder.getViewDataBinding().comicItemTitle;
 
     }
 
     @Override
     public void onItemClick(View view) {
-        MvlNavigator.getInstance().startCharacterDetail(character, ((RelativeLayout)view).getChildAt(0));
+        MvlNavigator.getInstance().startCharacterDetail(character, imageView, textView);
     }
 }

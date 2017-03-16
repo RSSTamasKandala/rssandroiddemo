@@ -1,19 +1,19 @@
 package org.rss_examples.rssmarveldemo.view.characterdetail;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.transition.TransitionManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -23,32 +23,31 @@ import com.karumi.marvelapiclient.model.ComicsDto;
 
 import org.rss_examples.rssmarveldemo.R;
 import org.rss_examples.rssmarveldemo.common.adapters.MvlAdapter;
-import org.rss_examples.rssmarveldemo.common.adapters.MvlPagerAdapter;
 import org.rss_examples.rssmarveldemo.common.superclasses.MvlActivity;
 import org.rss_examples.rssmarveldemo.contracts.CharacterDetailContract;
 import org.rss_examples.rssmarveldemo.databinding.CharacterDetailActivityBinding;
 import org.rss_examples.rssmarveldemo.view.characterdetail.comicsitem.CharacterDetailComicsItemView;
-import org.rss_examples.rssmarveldemo.view.characterdetail.pages.CharacterDetailInfoFragment;
 import org.rss_examples.rssmarveldemo.view.utils.CircleTransform;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CharacterDetailActivity extends MvlActivity implements CharacterDetailContract.ICharacterDetailView {
 
     private static final String EXTRA_CHARACTER_ID = "character_id";
     private MvlAdapter mvlAdapter;
-    private MvlPagerAdapter mvlPagerAdapter;
     private CharacterDetailActivityBinding binding;
 
     private boolean isExpanded = false;
+    private AnimatedVectorDrawable straightAnimatedVectorDrawable;
+    private AnimatedVectorDrawable reverseAnimatedVectorDrawable;
+    private AnimatedVectorDrawable currentDrawable;
 
-    public static void startActivity(String characterID, View view) {
+    public static void startActivity(String characterID, View view, View textView) {
         Intent intent = new Intent(view.getContext(), CharacterDetailActivity.class);
         intent.putExtra(CharacterDetailActivity.EXTRA_CHARACTER_ID, characterID);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                    (Activity) view.getContext(), view, view.getTransitionName());
+                    (Activity) view.getContext(),
+                    Pair.create(view, view.getTransitionName()),
+                    Pair.create(textView, textView.getTransitionName()));
             ActivityCompat.startActivity(view.getContext(), intent, options.toBundle());
         } else {
             view.getContext().startActivity(intent);
@@ -74,93 +73,34 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
         viewModel.getCharacterData(getIntent().getExtras().getString(EXTRA_CHARACTER_ID, ""));
         viewModel.getCharactersComicsList(Integer.valueOf(getIntent().getExtras().getString(EXTRA_CHARACTER_ID, "")));
 
-        binding.characterDetailPageMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                isExpanded = !isExpanded;
-                pageExpanded(isExpanded);
-            }
-        });
+        straightAnimatedVectorDrawable = (AnimatedVectorDrawable) ContextCompat.getDrawable(this, R.drawable.animated_vector_drawable_end_to_start);
+        reverseAnimatedVectorDrawable = (AnimatedVectorDrawable) ContextCompat.getDrawable(this, R.drawable.animated_vector_drawable_start_to_end);
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private void animate() {
+        if (isExpanded) {
+            currentDrawable = reverseAnimatedVectorDrawable;
+        } else {
+            currentDrawable = straightAnimatedVectorDrawable;
+        }
+
+        binding.characterDetailPageMore.setImageDrawable(currentDrawable);
+        currentDrawable.start();
     }
 
     @Override
-    public void showCharacterInfo(CharacterDto value) {
-        setupViewPager(value);
+    public void showCharacterInfo(CharacterDto characterDto) {
+        binding.characterDetailToolbarName.setText(characterDto.getName());
+        binding.characterDetailDesc.setText(characterDto.getDescription());
 
-        binding.characterDetailToolbarName.setText(value.getName());
-        binding.characterDetailToolbarRealname.setText(value.getDescription());
-
+        //// TODO: 2017. 03. 16.
         Glide.with(this)
-                .load(value.getThumbnail().getPath() + "." + value.getThumbnail().getExtension())
+                .load(characterDto.getThumbnail().getPath() + "." + characterDto.getThumbnail().getExtension())
                 .placeholder(ContextCompat.getDrawable(this, R.mipmap.ic_launcher))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .bitmapTransform(new CircleTransform(this))
                 .into(binding.characterDetailToolbarImage);
-
-        Glide.with(this)
-                .load(value.getResourceUri())
-                .placeholder(ContextCompat.getDrawable(this, R.mipmap.ic_launcher))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(binding.characterDetailTopImage);
-    }
-
-    @Override
-    public void setupViewPager(CharacterDto value) {
-        List<Fragment> pages = new ArrayList<>();
-        List<String> titles = new ArrayList<>();
-
-        titles.add("BIOGRAPHY");
-        titles.add("STATS");
-        titles.add("EVENTS");
-        titles.add("STORIES");
-
-        pages.add(CharacterDetailInfoFragment.createWithText(value.getDescription()));
-        pages.add(CharacterDetailInfoFragment.createWithText(value.getDescription()));
-        pages.add(CharacterDetailInfoFragment.createWithText(value.getDescription()));
-        pages.add(CharacterDetailInfoFragment.createWithText(value.getDescription()));
-
-        mvlPagerAdapter = new MvlPagerAdapter(getSupportFragmentManager(), pages, titles);
-        binding.characterDetailPager.setAdapter(mvlPagerAdapter);
-        binding.characterDetailPager.setOffscreenPageLimit(mvlPagerAdapter.getCount());
-
-        for (String s : titles) {
-            binding.characterDetailTabs.addTab(binding.characterDetailTabs.newTab().setText(s));
-        }
-
-        binding.characterDetailTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                binding.characterDetailPager.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-                binding.characterDetailPager.setCurrentItem(tab.getPosition());
-            }
-        });
-
-        binding.characterDetailPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                binding.characterDetailTabs.setScrollPosition(position, 0f, true);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
     }
 
     @Override
@@ -170,32 +110,28 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
         }
     }
 
-    public void pageExpanded(boolean b) {
-        changeFragmentsTextHeights(b);
+    @Override
+    public void onArrowClick() {
+        pageExpanded();
+    }
+
+    @Override
+    public void onBackClick() {
+        onBackPressed();
+    }
+
+    public void pageExpanded() {
+        isExpanded = !isExpanded;
 
         TransitionManager.beginDelayedTransition(binding.characterDetailLayout);
 
-        ViewGroup.LayoutParams paramsPager = binding.characterDetailPager.getLayoutParams();
-        if (b) {
-            paramsPager.height = binding.characterDetailPager.getHeight() * 2;
+        if (!isExpanded) {
+            binding.characterDetailDesc.setMaxLines(Integer.MAX_VALUE);
         } else {
-            paramsPager.height = binding.characterDetailPager.getHeight() / 2;
+            binding.characterDetailDesc.setMaxLines(4);
         }
-        binding.characterDetailPager.requestLayout();
+
+        animate();
     }
 
-    private void changeFragmentsTextHeights(boolean b) {
-        for (Fragment fragment : mvlPagerAdapter.getFragments()) {
-            if (((CharacterDetailInfoFragment) fragment).textView != null) {
-                View view = ((CharacterDetailInfoFragment) fragment).textView;
-                ViewGroup.LayoutParams params = view.getLayoutParams();
-                if (b) {
-                    params.height = view.getHeight() * 2;
-                } else {
-                    params.height = view.getHeight() / 2;
-                }
-                view.requestLayout();
-            }
-        }
-    }
 }

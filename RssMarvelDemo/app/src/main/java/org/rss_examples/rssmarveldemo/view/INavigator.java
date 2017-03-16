@@ -1,15 +1,13 @@
 package org.rss_examples.rssmarveldemo.view;
 
 
-import android.content.Context;
 import android.view.View;
 
 import com.karumi.marvelapiclient.model.CharacterDto;
-import com.karumi.marvelapiclient.model.ComicDto;
 
 interface INavigator {
 
-    void startComicDetail(Context context, ComicDto comicDto);
+    void startComicDetail(String comicId, View view, View textView);
 
-    void startCharacterDetail(CharacterDto characterDto, View view);
+    void startCharacterDetail(CharacterDto characterDto, View view, View textView);
 }
