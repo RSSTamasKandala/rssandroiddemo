@@ -8,8 +8,9 @@ import org.rss_examples.rssmarveldemo.R;
 import org.rss_examples.rssmarveldemo.common.superclasses.RecycleBindingVHolder;
 import org.rss_examples.rssmarveldemo.contracts.CharacterComicsItemContract;
 import org.rss_examples.rssmarveldemo.databinding.CharacterComicsListItemBinding;
+import org.rss_examples.rssmarveldemo.viewmodels.characterdetail.VmCharacterDetailComicsItem;
 
-public class CharacterDetailComicsItemView implements CharacterComicsItemContract.ICharacterComicstemView<CharacterComicsListItemBinding> {
+public class CharacterDetailComicsItemView implements CharacterComicsItemContract.ICharacterComicsItemView<CharacterComicsListItemBinding> {
 
     private final VmCharacterDetailComicsItem vm;
 

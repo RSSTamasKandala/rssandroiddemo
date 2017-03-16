@@ -5,7 +5,7 @@
 
         <variable
             name="comicDetail"
-            type="org.rss_examples.rssmarveldemo.view.comicdetail.ComicDetailViewModel" />
+            type="org.rss_examples.rssmarveldemo.viewmodels.comicdetail.VmComicDetail" />
     </data>
 
     <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -35,8 +35,7 @@
                         android:layout_height="150dp"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
-                        android:transitionName="@string/comic_item_image" />
+                        android:layout_alignParentTop="true"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -44,6 +43,37 @@
                         android:layout_marginTop="20dp"
                         android:onClick="@{comicDetail.onBackClick}"
                         android:src="@drawable/button_back" />
+
+                    <RelativeLayout
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/button_more"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true">
+
+                        <TextView
+                            android:id="@+id/comic_detail_more_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_toLeftOf="@+id/comic_detail_more_image"
+                            android:onClick="@{comicDetail.onMoreClick}"
+                            android:text="MORE"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:id="@+id/comic_detail_more_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="12dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:onClick="@{comicDetail.onMoreClick}"
+                            android:src="@drawable/icon_more" />
+
+                    </RelativeLayout>
+
                 </RelativeLayout>
 
             </android.support.design.widget.CollapsingToolbarLayout>
@@ -66,12 +96,10 @@
                     android:layout_height="wrap_content"
                     android:layout_above="@+id/comic_detail_toolbar_anchor"
                     android:ellipsize="end"
-                    android:fontFamily="monospace"
                     android:lines="1"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:transitionName="@string/comic_item_text" />
+                    android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/comic_detail_toolbar_writers"
@@ -79,12 +107,10 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/comic_detail_toolbar_anchor"
                     android:ellipsize="end"
-                    android:fontFamily="monospace"
                     android:lines="1"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:transitionName="@string/comic_item_text2" />
+                    android:textStyle="bold"/>
 
             </RelativeLayout>
         </android.support.design.widget.AppBarLayout>
@@ -105,7 +131,6 @@
                     android:id="@+id/comic_detail_page_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/comic_detail_toolbar"
                     android:animateLayoutChanges="true">
 
                     <TextView

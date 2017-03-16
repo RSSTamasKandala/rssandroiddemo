@@ -1,4 +1,4 @@
-package org.rss_examples.rssmarveldemo.view.comicdetail;
+package org.rss_examples.rssmarveldemo.viewmodels.comicdetail;
 
 import android.view.View;
 
@@ -14,7 +14,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class ComicDetailViewModel extends MvlViewModel<ComicDetailContract.IComicDetailView>
+public class VmComicDetail extends MvlViewModel<ComicDetailContract.IComicDetailView>
         implements ComicDetailContract.IDetailViewModel {
 
     @Override

@@ -1,4 +1,4 @@
-package org.rss_examples.rssmarveldemo.view.characterdetail;
+package org.rss_examples.rssmarveldemo.viewmodels.characterdetail;
 
 import android.view.View;
 
@@ -12,7 +12,7 @@ import org.rss_examples.rssmarveldemo.data.MarvelRepository;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-public class CharacterDetailViewModel extends MvlViewModel<CharacterDetailContract.ICharacterDetailView> implements CharacterDetailContract.ICharacterDetailViewModel {
+public class VmCharacterDetail extends MvlViewModel<CharacterDetailContract.ICharacterDetailView> implements CharacterDetailContract.ICharacterDetailViewModel {
 
     private CharacterDto characterDto;
 

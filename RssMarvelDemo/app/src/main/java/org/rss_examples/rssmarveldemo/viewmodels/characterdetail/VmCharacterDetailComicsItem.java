@@ -1,4 +1,4 @@
-package org.rss_examples.rssmarveldemo.view.characterdetail.comicsitem;
+package org.rss_examples.rssmarveldemo.viewmodels.characterdetail;
 
 import android.view.View;
 
@@ -7,7 +7,7 @@ import com.karumi.marvelapiclient.model.ComicDto;
 import org.rss_examples.rssmarveldemo.common.superclasses.MvlItemViewModel;
 import org.rss_examples.rssmarveldemo.contracts.CharacterComicsItemContract;
 
-public class VmCharacterDetailComicsItem extends MvlItemViewModel<CharacterComicsItemContract.ICharacterComicstemView>
+public class VmCharacterDetailComicsItem extends MvlItemViewModel<CharacterComicsItemContract.ICharacterComicsItemView>
         implements CharacterComicsItemContract.IVmCharacterComicsItem{
 
     private final ComicDto dto;

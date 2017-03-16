@@ -27,8 +27,8 @@ import org.rss_examples.rssmarveldemo.common.adapters.MvlAdapter;
 import org.rss_examples.rssmarveldemo.common.superclasses.MvlActivity;
 import org.rss_examples.rssmarveldemo.contracts.ComicDetailContract;
 import org.rss_examples.rssmarveldemo.databinding.ComicDetailActivityBinding;
-import org.rss_examples.rssmarveldemo.view.characterlist.CharacterItemView;
-import org.rss_examples.rssmarveldemo.view.utils.CircleTransform;
+import org.rss_examples.rssmarveldemo.view.comicdetail.charactersitem.ComicDetailCharactersItemView;
+import org.rss_examples.rssmarveldemo.viewmodels.comicdetail.VmComicDetail;
 
 public class ComicDetailActivity extends MvlActivity implements ComicDetailContract.IComicDetailView {
 
@@ -65,7 +65,7 @@ public class ComicDetailActivity extends MvlActivity implements ComicDetailContr
     @Override
     public void bindUI() {
         binding = DataBindingUtil.setContentView(this, R.layout.comic_detail_activity);
-        ComicDetailViewModel viewModel = new ComicDetailViewModel();
+        VmComicDetail viewModel = new VmComicDetail();
         viewModel.setView(this);
         binding.setComicDetail(viewModel);
 
@@ -103,16 +103,15 @@ public class ComicDetailActivity extends MvlActivity implements ComicDetailContr
         //// TODO: 2017. 03. 16.
         Glide.with(this)
                 .load(value.getThumbnail().getPath() + "." + value.getThumbnail().getExtension())
-                .placeholder(ContextCompat.getDrawable(this, R.mipmap.ic_launcher))
+                .placeholder(ContextCompat.getDrawable(this, R.drawable.header_placeholder))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .bitmapTransform(new CircleTransform(this))
                 .into(binding.comicDetailTopImage);
     }
 
     @Override
     public void showComicsCharactersInfo(CharactersDto value) {
         for (CharacterDto dto : value.getCharacters()) {
-            mvlAdapter.addItemView(new CharacterItemView(dto));
+            mvlAdapter.addItemView(new ComicDetailCharactersItemView(dto));
         }
     }
 

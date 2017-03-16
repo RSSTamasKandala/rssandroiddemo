@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="comicDetailCharacterItem"
+            type="org.rss_examples.rssmarveldemo.viewmodels.comicdetail.VmComicDetailCharactersItem" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:onClick="@{comicDetailCharacterItem.onItemClick}"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/comic_item_image"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:layout_centerHorizontal="true"
+            android:padding="2dp"
+            android:background="@drawable/circle_shape"
+            bind:loadCircleCharacterImage="@{comicDetailCharacterItem.picUrl}" />
+
+        <TextView
+            android:id="@+id/comic_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/comic_item_image"
+            android:lines="1"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:textColor="@android:color/black"
+            android:ellipsize="end"
+            android:text="@{comicDetailCharacterItem.name}" />
+
+    </RelativeLayout>
+</layout>

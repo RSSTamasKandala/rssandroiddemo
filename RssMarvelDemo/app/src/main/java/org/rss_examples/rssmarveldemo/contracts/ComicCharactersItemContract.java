@@ -5,13 +5,14 @@ import android.databinding.ViewDataBinding;
 import org.rss_examples.rssmarveldemo.common.interfaces.IMvlItemView;
 import org.rss_examples.rssmarveldemo.common.interfaces.IMvlViewModel;
 
-public interface CharacterComicsItemContract {
+public interface ComicCharactersItemContract {
 
-    public interface ICharacterComicsItemView<V extends ViewDataBinding> extends IMvlItemView<V> {
+    public interface IComicCharactersItemView<V extends ViewDataBinding> extends IMvlItemView<V> {
 
     }
 
-    public interface IVmCharacterComicsItem extends IMvlViewModel {
+    public interface IVmComicCharactersItem extends IMvlViewModel {
         String getPicUrl();
+        String getName();
     }
 }

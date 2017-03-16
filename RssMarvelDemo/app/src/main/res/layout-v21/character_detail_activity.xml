@@ -6,7 +6,7 @@
 
         <variable
             name="characterDetail"
-            type="org.rss_examples.rssmarveldemo.view.characterdetail.CharacterDetailViewModel" />
+            type="org.rss_examples.rssmarveldemo.viewmodels.characterdetail.VmCharacterDetail" />
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -23,9 +23,7 @@
                 android:id="@+id/character_detail_top_image"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
+                android:scaleType="fitXY"/>
 
             <ImageView
                 android:layout_width="wrap_content"

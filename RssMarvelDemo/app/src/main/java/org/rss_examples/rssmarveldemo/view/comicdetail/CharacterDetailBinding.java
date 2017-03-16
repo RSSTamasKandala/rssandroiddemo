@@ -1,4 +1,4 @@
-package org.rss_examples.rssmarveldemo.view.characterdetail;
+package org.rss_examples.rssmarveldemo.view.comicdetail;
 
 import android.databinding.BindingAdapter;
 import android.support.v4.content.ContextCompat;
@@ -10,24 +10,19 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import org.rss_examples.rssmarveldemo.R;
 import org.rss_examples.rssmarveldemo.view.utils.CircleTransform;
 
-public class CharacterDetailBindingUtil {
+/**
+ * Created by hsrac on 2017. 03. 16..
+ */
 
-    @BindingAdapter({"bind:loadCircleImage"})
-    public static void loadCircleImage(ImageView imageView, String url) {
+public class CharacterDetailBinding {
+
+    @BindingAdapter({"bind:loadCircleCharacterImage"})
+    public static void loadCircleCharacterImage(ImageView imageView, String url) {
         Glide.with(imageView.getContext())
                 .load(url)
                 .placeholder(ContextCompat.getDrawable(imageView.getContext(), R.drawable.portrait_placeholder))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .bitmapTransform(new CircleTransform(imageView.getContext()))
-                .into(imageView);
-    }
-
-    @BindingAdapter({"bind:loadSimpleImage"})
-    public static void loadSimpleImage(ImageView imageView, String url) {
-        Glide.with(imageView.getContext())
-                .load(url)
-                .placeholder(ContextCompat.getDrawable(imageView.getContext(), R.drawable.comic_placeholder))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
     }
 

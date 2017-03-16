@@ -6,7 +6,7 @@
 
         <variable
             name="comicsItem"
-            type="org.rss_examples.rssmarveldemo.view.characterdetail.comicsitem.VmCharacterDetailComicsItem" />
+            type="org.rss_examples.rssmarveldemo.viewmodels.characterdetail.VmCharacterDetailComicsItem" />
     </data>
 
     <RelativeLayout

@@ -28,6 +28,7 @@ import org.rss_examples.rssmarveldemo.contracts.CharacterDetailContract;
 import org.rss_examples.rssmarveldemo.databinding.CharacterDetailActivityBinding;
 import org.rss_examples.rssmarveldemo.view.characterdetail.comicsitem.CharacterDetailComicsItemView;
 import org.rss_examples.rssmarveldemo.view.utils.CircleTransform;
+import org.rss_examples.rssmarveldemo.viewmodels.characterdetail.VmCharacterDetail;
 
 public class CharacterDetailActivity extends MvlActivity implements CharacterDetailContract.ICharacterDetailView {
 
@@ -63,7 +64,7 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
     @Override
     public void bindUI() {
         binding = DataBindingUtil.setContentView(this, R.layout.character_detail_activity);
-        CharacterDetailViewModel viewModel = new CharacterDetailViewModel();
+        VmCharacterDetail viewModel = new VmCharacterDetail();
         viewModel.setView(this);
         binding.setCharacterDetail(viewModel);
 
@@ -97,10 +98,16 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
         //// TODO: 2017. 03. 16.
         Glide.with(this)
                 .load(characterDto.getThumbnail().getPath() + "." + characterDto.getThumbnail().getExtension())
-                .placeholder(ContextCompat.getDrawable(this, R.mipmap.ic_launcher))
+                .placeholder(ContextCompat.getDrawable(this, R.drawable.portrait_placeholder))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .bitmapTransform(new CircleTransform(this))
                 .into(binding.characterDetailToolbarImage);
+
+        Glide.with(this)
+                .load("")
+                .placeholder(ContextCompat.getDrawable(this, R.drawable.header_placeholder))
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(binding.characterDetailTopImage);
     }
 
     @Override

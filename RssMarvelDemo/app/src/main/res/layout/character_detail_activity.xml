@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="characterDetail"
-            type="org.rss_examples.rssmarveldemo.view.characterdetail.CharacterDetailViewModel" />
+            type="org.rss_examples.rssmarveldemo.viewmodels.characterdetail.VmCharacterDetail" />
     </data>
 
     <android.support.v4.widget.NestedScrollView
@@ -24,9 +23,7 @@
                 android:id="@+id/character_detail_top_image"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true" />
+                android:scaleType="fitXY" />
 
             <RelativeLayout
                 android:id="@+id/character_detail_toolbar"
@@ -53,7 +50,6 @@
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/character_detail_toolbar_image"
                     android:ellipsize="end"
-                    android:fontFamily="monospace"
                     android:lines="1"
                     android:textColor="@android:color/white"
                     android:textSize="14sp"
