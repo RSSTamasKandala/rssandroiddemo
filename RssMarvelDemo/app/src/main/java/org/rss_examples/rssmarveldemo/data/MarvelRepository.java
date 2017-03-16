@@ -122,6 +122,7 @@ public class MarvelRepository implements IMarvelRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    @WorkerThread
     @Override
     public Observable<ComicsDto> getComicListByCharacter(final int characterId, final int skip, final int limit) {
         return Observable
@@ -141,24 +142,28 @@ public class MarvelRepository implements IMarvelRepository {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    @WorkerThread
     @Override
-    public Observable<CharactersDto> getCharecterListByComic(final int skip, final int limit, final int comicId) {
-        return Observable.fromCallable(new Callable<CharactersDto>() {
-            @Override
-            public CharactersDto call() throws Exception {
-                CharactersQuery query = CharactersQuery.Builder.create().
-                        addComic(comicId)
-                        .withLimit(limit)
-                        .withOffset(skip)
-                        .build();
+    public Observable<CharactersDto> getCharacterListByComic(final int skip, final int limit, final int comicId) {
+        return Observable
+                .fromCallable(new Callable<CharactersDto>() {
+                    @Override
+                    public CharactersDto call() throws Exception {
+                        CharactersQuery query = CharactersQuery.Builder.create().
+                                addComic(comicId)
+                                .withLimit(limit)
+                                .withOffset(skip)
+                                .build();
 
-                MarvelResponse<CharactersDto> all = characterApiClient.getAll(query);
-                if (all.getCode() == SUCCESS_CODE) {
-                    return all.getResponse();
-                } else {
-                    throw new RestError(all.getCode());
-                }
-            }
-        });
+                        MarvelResponse<CharactersDto> all = characterApiClient.getAll(query);
+                        if (all.getCode() == SUCCESS_CODE) {
+                            return all.getResponse();
+                        } else {
+                            throw new RestError(all.getCode());
+                        }
+                    }
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 }

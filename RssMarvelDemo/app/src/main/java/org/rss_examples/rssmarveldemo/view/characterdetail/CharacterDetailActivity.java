@@ -121,8 +121,6 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
     }
 
     public void pageExpanded() {
-        isExpanded = !isExpanded;
-
         TransitionManager.beginDelayedTransition(binding.characterDetailLayout);
 
         if (!isExpanded) {
@@ -132,6 +130,8 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
         }
 
         animate();
+
+        isExpanded = !isExpanded;
     }
 
 }
