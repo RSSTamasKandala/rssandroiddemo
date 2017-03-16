@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:aandroid="http://schemas.android.com/tools"
-    xmlns:bind="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -10,61 +8,45 @@
             type="org.rss_examples.rssmarveldemo.view.comicdetail.ComicDetailViewModel" />
     </data>
 
-    <android.support.v4.widget.NestedScrollView
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/comic_detail_layout"
+        <android.support.design.widget.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:animateLayoutChanges="true">
+            android:background="@android:color/white">
 
-            <ImageView
-                android:id="@+id/comic_detail_top_image"
+            <android.support.design.widget.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:transitionName="@string/comic_item_image" />
-
-            <ImageView
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:onClick="@{comicDetail.onBackClick}"
-                android:src="@drawable/button_back" />
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <RelativeLayout
-                android:layout_width="100dp"
-                android:layout_height="40dp"
-                android:layout_above="@+id/comic_detail_toolbar"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/button_more">
+                <RelativeLayout
+                    android:id="@+id/collapse_part"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/comic_detail_more_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/comic_detail_more_image"
-                    android:onClick="@{comicDetail.onMoreClick}"
-                    android:text="MORE"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold" />
+                    <ImageView
+                        android:id="@+id/comic_detail_top_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:transitionName="@string/comic_item_image" />
 
-                <ImageView
-                    android:id="@+id/comic_detail_more_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="12dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:onClick="@{comicDetail.onMoreClick}"
-                    android:src="@drawable/icon_more" />
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:onClick="@{comicDetail.onBackClick}"
+                        android:src="@drawable/button_back" />
+                </RelativeLayout>
 
-            </RelativeLayout>
+            </android.support.design.widget.CollapsingToolbarLayout>
 
             <RelativeLayout
                 android:id="@+id/comic_detail_toolbar"
@@ -105,88 +87,102 @@
                     android:transitionName="@string/comic_item_text2" />
 
             </RelativeLayout>
+        </android.support.design.widget.AppBarLayout>
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:layout_height="match_parent">
 
             <RelativeLayout
-                android:id="@+id/comic_detail_page_layout"
+                android:id="@+id/comic_detail_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/comic_detail_toolbar"
                 android:animateLayoutChanges="true">
 
-                <TextView
-                    android:id="@+id/comic_detail_description_text"
+
+                <RelativeLayout
+                    android:id="@+id/comic_detail_page_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/comic_detail_toolbar"
+                    android:animateLayoutChanges="true">
+
+                    <TextView
+                        android:id="@+id/comic_detail_description_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginTop="10dp"
+                        android:text="DESCRIPTION"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/comic_detail_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/comic_detail_description_text"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginRight="50dp"
+                        android:ellipsize="end"
+                        android:maxLines="4" />
+
+                    <ImageView
+                        android:id="@+id/comic_detail_page_more"
+                        android:layout_width="40dp"
+                        android:layout_height="20dp"
+                        android:layout_below="@+id/comic_detail_desc"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:onClick="@{comicDetail.onArrowClick}"
+                        android:src="@drawable/vector_drawable_end" />
+
+                </RelativeLayout>
+
+                <ImageView
+                    android:id="@+id/comic_detail_side"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_alignBottom="@+id/comic_detail_page_layout"
+                    android:layout_alignTop="@+id/comic_detail_page_layout"
+                    android:layout_marginTop="-2dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/detail_info_side" />
+
+                <ImageView
+                    android:id="@+id/comic_detail_bot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/comic_detail_page_layout"
+                    android:layout_marginTop="-2dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/detail_info_bot" />
+
+                <TextView
+                    android:id="@+id/comic_detail_comics"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/comic_detail_bot"
+                    android:layout_marginBottom="20dp"
                     android:layout_marginLeft="50dp"
                     android:layout_marginTop="10dp"
-                    android:text="DESCRIPTION"
+                    android:text="CHARACTERS"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/comic_detail_desc"
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/comic_detail_bot_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/comic_detail_description_text"
-                    android:layout_marginLeft="50dp"
-                    android:layout_marginRight="50dp"
-                    android:ellipsize="end"
-                    android:maxLines="4" />
-
-                <ImageView
-                    android:id="@+id/comic_detail_page_more"
-                    android:layout_width="40dp"
-                    android:layout_height="20dp"
-                    android:layout_below="@+id/comic_detail_desc"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:onClick="@{comicDetail.onArrowClick}"
-                    android:src="@drawable/vector_drawable_end" />
+                    android:layout_below="@+id/comic_detail_comics"
+                    android:layout_marginLeft="50dp" />
 
             </RelativeLayout>
+        </android.support.v4.widget.NestedScrollView>
 
-            <ImageView
-                android:id="@+id/comic_detail_side"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/comic_detail_page_layout"
-                android:layout_alignTop="@+id/comic_detail_page_layout"
-                android:layout_marginTop="-2dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/detail_info_side" />
-
-            <ImageView
-                android:id="@+id/comic_detail_bot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/comic_detail_page_layout"
-                android:layout_marginTop="-2dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/detail_info_bot" />
-
-            <TextView
-                android:id="@+id/comic_detail_comics"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/comic_detail_bot"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginTop="10dp"
-                android:text="CHARACTERS"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/comic_detail_bot_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/comic_detail_comics"
-                android:layout_marginLeft="50dp" />
-
-        </RelativeLayout>
-    </android.support.v4.widget.NestedScrollView>
-
+    </android.support.design.widget.CoordinatorLayout>
 </layout>
