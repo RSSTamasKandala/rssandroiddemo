@@ -127,7 +127,7 @@ public class ComicDetailActivity extends MvlActivity implements ComicDetailContr
 
     @Override
     public void onArrowClick() {
-        TransitionManager.beginDelayedTransition(binding.comicDetailLayout);
+        TransitionManager.beginDelayedTransition(binding.comicDetailPageLayout);
 
         if (!isExpanded) {
             binding.comicDetailDesc.setMaxLines(Integer.MAX_VALUE);

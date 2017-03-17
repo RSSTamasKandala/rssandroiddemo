@@ -15,6 +15,7 @@
         android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
+            android:id="@+id/comic_detail_top_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/white">
@@ -35,7 +36,7 @@
                         android:layout_height="150dp"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"/>
+                        android:layout_alignParentTop="true" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -47,9 +48,9 @@
                     <RelativeLayout
                         android:layout_width="100dp"
                         android:layout_height="40dp"
-                        android:background="@drawable/button_more"
                         android:layout_alignParentBottom="true"
-                        android:layout_alignParentRight="true">
+                        android:layout_alignParentRight="true"
+                        android:background="@drawable/button_more">
 
                         <TextView
                             android:id="@+id/comic_detail_more_text"
@@ -77,60 +78,60 @@
                 </RelativeLayout>
 
             </android.support.design.widget.CollapsingToolbarLayout>
-
-            <RelativeLayout
-                android:id="@+id/comic_detail_toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_below="@id/comic_detail_top_image"
-                android:background="@drawable/detail_comic_top">
-
-                <View
-                    android:id="@+id/comic_detail_toolbar_anchor"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp" />
-
-                <TextView
-                    android:id="@+id/comic_detail_toolbar_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_above="@+id/comic_detail_toolbar_anchor"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/comic_detail_toolbar_writers"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/comic_detail_toolbar_anchor"
-                    android:ellipsize="end"
-                    android:lines="1"
-                    android:textColor="@android:color/white"
-                    android:textSize="14sp"
-                    android:textStyle="bold"/>
-
-            </RelativeLayout>
         </android.support.design.widget.AppBarLayout>
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <RelativeLayout
-                android:id="@+id/comic_detail_layout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:animateLayoutChanges="true">
+                android:layout_height="match_parent">
 
+                <RelativeLayout
+                    android:id="@+id/comic_detail_toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:background="@drawable/detail_comic_top">
+
+                    <View
+                        android:id="@+id/comic_detail_toolbar_anchor"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_centerVertical="true" />
+
+                    <TextView
+                        android:id="@+id/comic_detail_toolbar_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_above="@+id/comic_detail_toolbar_anchor"
+                        android:layout_marginLeft="20dp"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/comic_detail_toolbar_writers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/comic_detail_toolbar_anchor"
+                        android:layout_marginLeft="20dp"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/comic_detail_page_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/comic_detail_toolbar"
                     android:animateLayoutChanges="true">
 
                     <TextView
@@ -205,9 +206,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/comic_detail_comics"
                     android:layout_marginLeft="50dp" />
-
             </RelativeLayout>
         </android.support.v4.widget.NestedScrollView>
-
     </android.support.design.widget.CoordinatorLayout>
 </layout>

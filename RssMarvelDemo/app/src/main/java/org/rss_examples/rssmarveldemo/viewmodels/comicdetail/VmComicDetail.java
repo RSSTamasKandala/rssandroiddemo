@@ -10,9 +10,7 @@ import org.rss_examples.rssmarveldemo.contracts.ComicDetailContract;
 import org.rss_examples.rssmarveldemo.data.MarvelRepository;
 
 import io.reactivex.Observer;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 public class VmComicDetail extends MvlViewModel<ComicDetailContract.IComicDetailView>
         implements ComicDetailContract.IDetailViewModel {
@@ -20,8 +18,6 @@ public class VmComicDetail extends MvlViewModel<ComicDetailContract.IComicDetail
     @Override
     public void getComicData(String string) {
         MarvelRepository.getInstance().getComic(string)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<ComicDto>() {
                     @Override
                     public void onSubscribe(Disposable d) {
