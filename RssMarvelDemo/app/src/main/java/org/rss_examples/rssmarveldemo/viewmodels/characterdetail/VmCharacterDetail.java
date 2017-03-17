@@ -78,6 +78,7 @@ public class VmCharacterDetail extends MvlViewModel<CharacterDetailContract.ICha
     public String getPicUrl() {
         if (characterDto != null) {
             return characterDto.getThumbnail().getPath() + "." + characterDto.getThumbnail().getExtension();
+
         } else {
             return "";
         }

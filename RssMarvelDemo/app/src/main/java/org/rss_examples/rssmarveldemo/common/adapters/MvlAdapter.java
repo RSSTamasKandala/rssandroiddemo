@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import org.rss_examples.rssmarveldemo.common.interfaces.IMvlItemView;
 import org.rss_examples.rssmarveldemo.common.superclasses.RecycleBindingVHolder;
+import org.rss_examples.rssmarveldemo.common.view.ProgressItemView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,4 +49,33 @@ public class MvlAdapter extends RecyclerView.Adapter<RecycleBindingVHolder> {
         return itemViews.get(position).getLayoutId();
     }
 
+    public IMvlItemView getItemView(int position) {
+        return itemViews.get(position);
+    }
+
+    public void showProgress() {
+        if(itemViews.size()>0) {
+            int lastItem = itemViews.size() - 1;
+            if (!(itemViews.get(lastItem) instanceof ProgressItemView)) {
+                itemViews.add(new ProgressItemView());
+                notifyItemInserted(itemViews.size() - 1);
+            }
+        }
+    }
+
+    public void hideProgress() {
+        if (!itemViews.isEmpty()) {
+            int lastItem = itemViews.size() - 1;
+            if (itemViews.get(lastItem) instanceof ProgressItemView) {
+                itemViews.remove(lastItem);
+                notifyItemRemoved(lastItem);
+            }
+        }
+    }
+
+    public void addItemViews(List<IMvlItemView> list) {
+        int startPosition = this.itemViews.size();
+        this.itemViews.addAll(list);
+        notifyItemRangeInserted(startPosition, itemViews.size());
+    }
 }

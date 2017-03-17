@@ -10,9 +10,10 @@ public interface CharacterListContract {
 
     public interface ICharacterListView extends IMvlView{
         void showList(List<IMvlItemView> list);
+        void addList(List<IMvlItemView> list);
     }
 
     public interface IVmCharacterList extends IMvlViewModel{
-        void getCharacterList();
+        void getCharacterList(int skip);
     }
 }

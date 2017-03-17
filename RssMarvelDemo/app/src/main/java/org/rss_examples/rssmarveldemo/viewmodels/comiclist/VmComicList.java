@@ -18,9 +18,12 @@ import io.reactivex.disposables.Disposable;
 public class VmComicList extends MvlViewModel<ComicListContract.IComicListView> implements ComicListContract.IVmComicList {
 
     @Override
-    public void getComicList() {
-        mvlView.showLoading(true);
-        MarvelRepository.getInstance().getComicList(0, 20).subscribe(new Observer<ComicsDto>() {
+    public void getComicList(final int skip) {
+        if (skip == 0) {
+            mvlView.showLoading(true);
+        }
+
+        MarvelRepository.getInstance().getComicList(skip, 20).subscribe(new Observer<ComicsDto>() {
             @Override
             public void onSubscribe(Disposable d) {
 
@@ -32,8 +35,13 @@ public class VmComicList extends MvlViewModel<ComicListContract.IComicListView> 
                 for (ComicDto comicDto : value.getComics()) {
                     itemViews.add(new ComicItemView(comicDto));
                 }
-                mvlView.showList(itemViews);
-                mvlView.showLoading(false);
+                if (skip == 0) {
+                    mvlView.showList(itemViews);
+                    mvlView.showLoading(false);
+                } else {
+                    mvlView.addList(itemViews);
+                }
+
             }
 
             @Override

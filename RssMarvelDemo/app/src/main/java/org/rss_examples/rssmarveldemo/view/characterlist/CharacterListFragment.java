@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import org.rss_examples.rssmarveldemo.R;
 import org.rss_examples.rssmarveldemo.common.adapters.MvlAdapter;
 import org.rss_examples.rssmarveldemo.common.interfaces.IMvlItemView;
+import org.rss_examples.rssmarveldemo.common.listeners.LazyLoadingScrollListener;
 import org.rss_examples.rssmarveldemo.common.superclasses.MvlFragment;
 import org.rss_examples.rssmarveldemo.contracts.CharacterListContract;
 import org.rss_examples.rssmarveldemo.databinding.CharacterListBinding;
@@ -18,11 +19,12 @@ import org.rss_examples.rssmarveldemo.viewmodels.characterlist.VmCharacterList;
 
 import java.util.List;
 
-public class CharacterListFragment extends MvlFragment implements CharacterListContract.ICharacterListView {
+public class CharacterListFragment extends MvlFragment implements CharacterListContract.ICharacterListView, LazyLoadingScrollListener.OnLazyLoadingListener {
 
 
     private CharacterListBinding binding;
     private MvlAdapter adapter;
+    private VmCharacterList viewModel;
 
 
     @Nullable
@@ -41,18 +43,31 @@ public class CharacterListFragment extends MvlFragment implements CharacterListC
 
     @Override
     public void bindUI() {
-        VmCharacterList viewmodel = new VmCharacterList();
-        viewmodel.setView(this);
-        binding.setViewmodel(viewmodel);
+        viewModel = new VmCharacterList();
+        viewModel.setView(this);
+        binding.setViewmodel(viewModel);
         binding.characterlist.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MvlAdapter();
         binding.characterlist.setAdapter(adapter);
-        viewmodel.getCharacterList();
+        viewModel.getCharacterList(0);
+        binding.characterlist.addOnScrollListener(new LazyLoadingScrollListener(this));
 
     }
 
     @Override
     public void showList(List<IMvlItemView> list) {
         adapter.setItemViews(list);
+    }
+
+    @Override
+    public void addList(List<IMvlItemView> list) {
+        adapter.hideProgress();
+        adapter.addItemViews(list);
+    }
+
+    @Override
+    public void onLazyLoading(int lastItem) {
+        adapter.showProgress();
+        viewModel.getCharacterList(lastItem);
     }
 }
