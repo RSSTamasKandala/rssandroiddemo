@@ -87,6 +87,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <RelativeLayout
+                android:id="@+id/comic_detail_mid_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -161,8 +162,8 @@
 
                     <ImageView
                         android:id="@+id/comic_detail_page_more"
-                        android:layout_width="40dp"
-                        android:layout_height="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_below="@+id/comic_detail_desc"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
