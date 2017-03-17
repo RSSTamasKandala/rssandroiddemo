@@ -15,8 +15,6 @@ import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.karumi.marvelapiclient.model.CharacterDto;
 import com.karumi.marvelapiclient.model.CharactersDto;
 import com.karumi.marvelapiclient.model.ComicDto;
@@ -33,6 +31,7 @@ import org.rss_examples.rssmarveldemo.viewmodels.comicdetail.VmComicDetail;
 public class ComicDetailActivity extends MvlActivity implements ComicDetailContract.IComicDetailView {
 
     private static final String EXTRA_COMIC_ID = "comic_id";
+    public static final String PICTURE_URL = "picture_url";
 
     private MvlAdapter mvlAdapter;
     private ComicDetailActivityBinding binding;
@@ -42,9 +41,10 @@ public class ComicDetailActivity extends MvlActivity implements ComicDetailContr
     private AnimatedVectorDrawable reverseAnimatedVectorDrawable;
     private AnimatedVectorDrawable currentDrawable;
 
-    public static void startActivity(String comicId, View image, View textView) {
+    public static void startActivity(String comicId, String url, View image, View textView) {
         Intent intent = new Intent(image.getContext(), ComicDetailActivity.class);
         intent.putExtra(EXTRA_COMIC_ID, comicId);
+        intent.putExtra(PICTURE_URL, url);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     (Activity) image.getContext(),
@@ -74,8 +74,10 @@ public class ComicDetailActivity extends MvlActivity implements ComicDetailContr
         binding.comicDetailBotList.setLayoutManager(new GridLayoutManager(this, 3));
         binding.comicDetailBotList.setAdapter(mvlAdapter);
 
-        straightAnimatedVectorDrawable = (AnimatedVectorDrawable) ContextCompat.getDrawable(this, R.drawable.animated_vector_drawable_end_to_start);
-        reverseAnimatedVectorDrawable = (AnimatedVectorDrawable) ContextCompat.getDrawable(this, R.drawable.animated_vector_drawable_start_to_end);
+        straightAnimatedVectorDrawable = (AnimatedVectorDrawable) ContextCompat.
+                getDrawable(this, R.drawable.animated_vector_drawable_start_to_end);
+        reverseAnimatedVectorDrawable = (AnimatedVectorDrawable) ContextCompat.
+                getDrawable(this, R.drawable.animated_vector_drawable_end_to_start);
 
         viewModel.getComicData(getIntent().getExtras().getString(EXTRA_COMIC_ID, ""));
         viewModel.getComicsCharactersData(Integer.parseInt(getIntent().getExtras().getString(EXTRA_COMIC_ID, "")));
@@ -99,13 +101,6 @@ public class ComicDetailActivity extends MvlActivity implements ComicDetailContr
 
             binding.comicDetailToolbarWriters.setText(sb.toString());
         }
-
-        //// TODO: 2017. 03. 16.
-        Glide.with(this)
-                .load(value.getThumbnail().getPath() + "." + value.getThumbnail().getExtension())
-                .placeholder(ContextCompat.getDrawable(this, R.drawable.header_placeholder))
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(binding.comicDetailTopImage);
     }
 
     @Override
@@ -138,6 +133,11 @@ public class ComicDetailActivity extends MvlActivity implements ComicDetailContr
         animate();
 
         isExpanded = !isExpanded;
+    }
+
+    @Override
+    public String getPicUrl() {
+        return getIntent().getExtras().getString(PICTURE_URL, "");
     }
 
     @TargetApi(Build.VERSION_CODES.M)

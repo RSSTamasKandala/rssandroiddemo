@@ -26,14 +26,13 @@
 
         <TextView
             android:id="@+id/comic_item_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_marginTop="10dp"
             android:layout_toRightOf="@+id/comic_item_image"
             android:ellipsize="end"
-            android:gravity="center"
             android:lines="1"
+            android:layout_centerVertical="true"
             android:textColor="@android:color/white"
             android:text="@{comicItem.name}"
             android:transitionName="@string/comic_item_text"/>

@@ -20,10 +20,12 @@ public class ComicItemView implements ComicItemContract.IComictemView<ComicItemB
 
     private ImageView imageView;
     private TextView textView;
+    private String url;
 
     public ComicItemView(ComicDto comicDto) {
-        this.comic=comicDto;
+        this.comic = comicDto;
         this.vmComicItem = new VmComicItem(comicDto);
+        url = comicDto.getThumbnail().getPath() + "." + comicDto.getThumbnail().getExtension();
     }
 
     @Override
@@ -41,6 +43,6 @@ public class ComicItemView implements ComicItemContract.IComictemView<ComicItemB
 
     @Override
     public void onItemClick(View view) {
-        MvlNavigator.getInstance().startComicDetail(comic.getId(), imageView, textView);
+        MvlNavigator.getInstance().startComicDetail(comic.getId(), url, imageView, textView);
     }
 }

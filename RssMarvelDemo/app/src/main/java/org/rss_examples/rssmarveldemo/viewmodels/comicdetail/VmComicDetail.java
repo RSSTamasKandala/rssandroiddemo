@@ -91,4 +91,13 @@ public class VmComicDetail extends MvlViewModel<ComicDetailContract.IComicDetail
             mvlView.onArrowClick();
         }
     }
+
+    @Override
+    public String getPicUrl() {
+        if (mvlView != null) {
+            return mvlView.getPicUrl();
+        } else {
+            return "";
+        }
+    }
 }

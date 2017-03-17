@@ -17,6 +17,7 @@ public interface ComicDetailContract {
         void onBackClick();
         void onMoreClick();
         void onArrowClick();
+        String getPicUrl();
     }
 
     public interface IDetailViewModel extends IMvlViewModel {
@@ -25,6 +26,7 @@ public interface ComicDetailContract {
         void onBackClick(View view);
         void onMoreClick(View view);
         void onArrowClick(View view);
+        String getPicUrl();
     }
 
 }

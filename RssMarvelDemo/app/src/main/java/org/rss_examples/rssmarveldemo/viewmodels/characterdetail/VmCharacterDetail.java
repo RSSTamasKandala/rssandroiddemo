@@ -14,8 +14,6 @@ import io.reactivex.disposables.Disposable;
 
 public class VmCharacterDetail extends MvlViewModel<CharacterDetailContract.ICharacterDetailView> implements CharacterDetailContract.ICharacterDetailViewModel {
 
-    private CharacterDto characterDto;
-
     @Override
     public void getCharacterData(String id) {
         MarvelRepository.getInstance().getCharacter(id)
@@ -28,8 +26,6 @@ public class VmCharacterDetail extends MvlViewModel<CharacterDetailContract.ICha
                     @Override
                     public void onNext(CharacterDto value) {
                         if (mvlView != null) {
-                            characterDto = value;
-                            getPicUrl();
                             mvlView.showCharacterInfo(value);
                         }
                     }
@@ -76,9 +72,8 @@ public class VmCharacterDetail extends MvlViewModel<CharacterDetailContract.ICha
 
     @Override
     public String getPicUrl() {
-        if (characterDto != null) {
-            return characterDto.getThumbnail().getPath() + "." + characterDto.getThumbnail().getExtension();
-
+        if (mvlView != null) {
+            return mvlView.getPicUrl();
         } else {
             return "";
         }

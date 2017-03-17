@@ -15,6 +15,7 @@ public interface CharacterDetailContract {
         void setupComicsList(ComicsDto comics);
         void onArrowClick();
         void onBackClick();
+        String getPicUrl();
     }
 
     public interface ICharacterDetailViewModel extends IMvlViewModel {

@@ -20,12 +20,12 @@ public class MvlNavigator implements INavigator {
     }
 
     @Override
-    public void startComicDetail(String comicId, View view, View textView) {
-        ComicDetailActivity.startActivity(comicId, view, textView);
+    public void startComicDetail(String comicId, String url, View view, View textView) {
+        ComicDetailActivity.startActivity(comicId, url, view, textView);
     }
 
     @Override
-    public void startCharacterDetail(String characterId, View view, View textView) {
-        CharacterDetailActivity.startActivity(characterId, view, textView);
+    public void startCharacterDetail(String characterId, String url, View view, View textView) {
+        CharacterDetailActivity.startActivity(characterId, url, view, textView);
     }
 }

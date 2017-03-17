@@ -21,10 +21,12 @@ public class CharacterItemView implements CharacterItemContract.ICharacterItemVi
 
     private ImageView imageView;
     private TextView textView;
+    private String url;
 
     public CharacterItemView(CharacterDto characterItem) {
         this.character = characterItem;
         vmCharacterItem = new VmCharacterItem(characterItem);
+        url = characterItem.getThumbnail().getPath() + "." + characterItem.getThumbnail().getExtension();
     }
 
     @Override
@@ -42,6 +44,6 @@ public class CharacterItemView implements CharacterItemContract.ICharacterItemVi
 
     @Override
     public void onItemClick(View view) {
-        MvlNavigator.getInstance().startCharacterDetail(character.getId(), imageView, textView);
+        MvlNavigator.getInstance().startCharacterDetail(character.getId(), url, imageView, textView);
     }
 }

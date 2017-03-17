@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
@@ -31,12 +32,17 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/comic_detail_top_image"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/comic_placeholder"/>
+
+                    <ImageView
+                        android:id="@+id/comic_detail_top_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="150dp"
+                        android:layout_centerInParent="true"
+                        bind:loadSimpleImage="@{comicDetail.picUrl}"
                         android:transitionName="@string/comic_item_image" />
 
                     <ImageView
@@ -168,7 +174,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:onClick="@{comicDetail.onArrowClick}"
-                        android:src="@drawable/vector_drawable_end" />
+                        android:src="@drawable/vector_drawable_start" />
 
                 </RelativeLayout>
 
