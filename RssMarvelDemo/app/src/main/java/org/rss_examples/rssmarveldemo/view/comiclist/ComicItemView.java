@@ -43,6 +43,6 @@ public class ComicItemView implements ComicItemContract.IComictemView<ComicItemB
 
     @Override
     public void onItemClick(View view) {
-        MvlNavigator.getInstance().startComicDetail(comic.getId(), url, imageView, textView);
+        MvlNavigator.getInstance().startComicDetail(comic.getId(), url, comic.getTitle(), imageView, textView);
     }
 }

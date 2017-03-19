@@ -31,6 +31,8 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
 
     private static final String EXTRA_CHARACTER_ID = "character_id";
     public static final String PICTURE_URL = "picture_url";
+    public static final String CHARACTER_NAME = "character_name";
+
     private MvlAdapter mvlAdapter;
     private CharacterDetailActivityBinding binding;
 
@@ -39,10 +41,11 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
     private AnimatedVectorDrawable reverseAnimatedVectorDrawable;
     private AnimatedVectorDrawable currentDrawable;
 
-    public static void startActivity(String characterID, String url, View view, View textView) {
+    public static void startActivity(String characterID, String url, String name, View view, View textView) {
         Intent intent = new Intent(view.getContext(), CharacterDetailActivity.class);
         intent.putExtra(CharacterDetailActivity.EXTRA_CHARACTER_ID, characterID);
         intent.putExtra(PICTURE_URL, url);
+        intent.putExtra(CHARACTER_NAME, name);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     (Activity) view.getContext(),
@@ -118,6 +121,11 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
     @Override
     public String getPicUrl() {
         return getIntent().getExtras().getString(PICTURE_URL, "");
+    }
+
+    @Override
+    public String getName() {
+        return getIntent().getExtras().getString(CHARACTER_NAME, "");
     }
 
     public void pageExpanded() {

@@ -92,4 +92,13 @@ public class VmCharacterDetail extends MvlViewModel<CharacterDetailContract.ICha
             mvlView.onBackClick();
         }
     }
+
+    @Override
+    public String getName() {
+        if (mvlView != null) {
+            return mvlView.getName();
+        } else {
+            return "";
+        }
+    }
 }

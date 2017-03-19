@@ -34,7 +34,7 @@
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/comic_placeholder"/>
 
                     <ImageView
@@ -42,7 +42,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="150dp"
                         android:layout_centerInParent="true"
-                        bind:loadSimpleImage="@{comicDetail.picUrl}"
+                        bind:loadImage="@{comicDetail.picUrl}"
                         android:transitionName="@string/comic_item_image" />
 
                     <ImageView
@@ -116,12 +116,11 @@
                         android:layout_above="@+id/comic_detail_toolbar_anchor"
                         android:layout_marginLeft="20dp"
                         android:ellipsize="end"
-                        android:fontFamily="serif-monospace"
                         android:transitionName="@string/comic_item_text"
+                        android:text="@{comicDetail.title}"
                         android:lines="1"
                         android:textColor="@android:color/white"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/comic_detail_toolbar_writers"

@@ -35,7 +35,7 @@
                         android:id="@+id/character_detail_top_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="fitXY"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/header_placeholder"/>
 
                     <ImageView
@@ -53,7 +53,6 @@
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="-30dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <RelativeLayout
@@ -66,7 +65,7 @@
                     android:id="@+id/character_detail_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:background="@drawable/detail_info_top">
+                    android:background="@drawable/detail_comic_top">
 
                     <ImageView
                         android:id="@+id/character_detail_toolbar_image"
@@ -86,11 +85,10 @@
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@+id/character_detail_toolbar_image"
                         android:ellipsize="end"
-                        android:fontFamily="monospace"
                         android:lines="1"
                         android:textColor="@android:color/white"
                         android:textSize="14sp"
-                        android:textStyle="bold"
+                        android:text="@{characterDetail.name}"
                         android:transitionName="@string/character_item_text" />
 
                 </RelativeLayout>

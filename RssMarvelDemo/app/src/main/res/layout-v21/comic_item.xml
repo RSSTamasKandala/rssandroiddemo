@@ -26,7 +26,7 @@
 
         <TextView
             android:id="@+id/comic_item_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@+id/comic_item_image"
@@ -36,7 +36,6 @@
             android:textColor="@android:color/white"
             android:text="@{comicItem.name}"
             android:transitionName="@string/comic_item_text"/>
-
 
     </RelativeLayout>
 </layout>

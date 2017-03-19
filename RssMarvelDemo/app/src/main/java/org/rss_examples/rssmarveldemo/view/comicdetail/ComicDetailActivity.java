@@ -32,6 +32,7 @@ public class ComicDetailActivity extends MvlActivity implements ComicDetailContr
 
     private static final String EXTRA_COMIC_ID = "comic_id";
     public static final String PICTURE_URL = "picture_url";
+    public static final String COMIC_TITLE = "comic_title";
 
     private MvlAdapter mvlAdapter;
     private ComicDetailActivityBinding binding;
@@ -41,10 +42,11 @@ public class ComicDetailActivity extends MvlActivity implements ComicDetailContr
     private AnimatedVectorDrawable reverseAnimatedVectorDrawable;
     private AnimatedVectorDrawable currentDrawable;
 
-    public static void startActivity(String comicId, String url, View image, View textView) {
+    public static void startActivity(String comicId, String url, String title, View image, View textView) {
         Intent intent = new Intent(image.getContext(), ComicDetailActivity.class);
         intent.putExtra(EXTRA_COMIC_ID, comicId);
         intent.putExtra(PICTURE_URL, url);
+        intent.putExtra(COMIC_TITLE, title);
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     (Activity) image.getContext(),
@@ -138,6 +140,11 @@ public class ComicDetailActivity extends MvlActivity implements ComicDetailContr
     @Override
     public String getPicUrl() {
         return getIntent().getExtras().getString(PICTURE_URL, "");
+    }
+
+    @Override
+    public String getName() {
+        return getIntent().getExtras().getString(COMIC_TITLE, "");
     }
 
     @TargetApi(Build.VERSION_CODES.M)

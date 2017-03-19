@@ -100,4 +100,14 @@ public class VmComicDetail extends MvlViewModel<ComicDetailContract.IComicDetail
             return "";
         }
     }
+
+    @Override
+    public String getTitle() {
+        if (mvlView != null) {
+            return mvlView.getName();
+        } else {
+            return "";
+        }
+    }
+    
 }

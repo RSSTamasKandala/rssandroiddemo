@@ -16,6 +16,7 @@ public interface CharacterDetailContract {
         void onArrowClick();
         void onBackClick();
         String getPicUrl();
+        String getName();
     }
 
     public interface ICharacterDetailViewModel extends IMvlViewModel {
@@ -24,5 +25,6 @@ public interface CharacterDetailContract {
         String getPicUrl();
         void onArrowClick(View view);
         void onBackClick(View view);
+        String getName();
     }
 }

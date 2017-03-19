@@ -44,6 +44,6 @@ public class CharacterItemView implements CharacterItemContract.ICharacterItemVi
 
     @Override
     public void onItemClick(View view) {
-        MvlNavigator.getInstance().startCharacterDetail(character.getId(), url, imageView, textView);
+        MvlNavigator.getInstance().startCharacterDetail(character.getId(), url, character.getName(), imageView, textView);
     }
 }
