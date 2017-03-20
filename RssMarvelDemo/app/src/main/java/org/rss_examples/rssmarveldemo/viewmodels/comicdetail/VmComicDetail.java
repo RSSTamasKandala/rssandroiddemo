@@ -9,16 +9,14 @@ import org.rss_examples.rssmarveldemo.common.superclasses.MvlViewModel;
 import org.rss_examples.rssmarveldemo.contracts.ComicDetailContract;
 import org.rss_examples.rssmarveldemo.data.MarvelRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.Observer;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public class VmComicDetail extends MvlViewModel<ComicDetailContract.IComicDetailView>
         implements ComicDetailContract.IDetailViewModel {
 
-    private List<Disposable> disposable = new ArrayList<>();
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     public void getComicData(String string) {
@@ -26,7 +24,7 @@ public class VmComicDetail extends MvlViewModel<ComicDetailContract.IComicDetail
                 .subscribe(new Observer<ComicDto>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        disposable.add(d);
+                        compositeDisposable.add(d);
                     }
 
                     @Override
@@ -54,7 +52,7 @@ public class VmComicDetail extends MvlViewModel<ComicDetailContract.IComicDetail
                 .subscribe(new Observer<CharactersDto>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        disposable.add(d);
+                        compositeDisposable.add(d);
                     }
 
                     @Override
@@ -117,10 +115,9 @@ public class VmComicDetail extends MvlViewModel<ComicDetailContract.IComicDetail
 
     @Override
     public void unSubscribe () {
-        for (Disposable d : disposable) {
-            if (!d.isDisposed()) {
-                d.dispose();
-            }
+        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
+            compositeDisposable = new CompositeDisposable();
         }
     }
 }

@@ -65,15 +65,8 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        viewModel.getCharacterData(getIntent().getExtras().getString(EXTRA_CHARACTER_ID, ""));
-        viewModel.getCharactersComicsList(Integer.valueOf(getIntent().getExtras().getString(EXTRA_CHARACTER_ID, "")));
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
+    protected void onDestroy() {
+        super.onDestroy();
         viewModel.unSubscribe();
     }
 
@@ -92,6 +85,9 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
                 getDrawable(this, R.drawable.animated_vector_drawable_start_to_end);
         reverseAnimatedVectorDrawable = (AnimatedVectorDrawable) ContextCompat.
                 getDrawable(this, R.drawable.animated_vector_drawable_end_to_start);
+
+        viewModel.getCharacterData(getIntent().getExtras().getString(EXTRA_CHARACTER_ID, ""));
+        viewModel.getCharactersComicsList(Integer.valueOf(getIntent().getExtras().getString(EXTRA_CHARACTER_ID, "")));
     }
 
     @TargetApi(Build.VERSION_CODES.M)

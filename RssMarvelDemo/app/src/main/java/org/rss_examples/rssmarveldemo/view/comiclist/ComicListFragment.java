@@ -40,14 +40,8 @@ public class ComicListFragment extends MvlFragment implements ComicListContract.
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        vmComicList.getComicList(0);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroyView() {
+        super.onDestroyView();
         vmComicList.unSubscribe();
     }
 
@@ -60,7 +54,7 @@ public class ComicListFragment extends MvlFragment implements ComicListContract.
         binding.comicList.setLayoutManager(new LinearLayoutManager(getActivity()));
         binding.comicList.setAdapter(comicAdapter);
         binding.comicList.addOnScrollListener(new LazyLoadingScrollListener(this));
-
+        vmComicList.getComicList(0);
     }
 
     @Override

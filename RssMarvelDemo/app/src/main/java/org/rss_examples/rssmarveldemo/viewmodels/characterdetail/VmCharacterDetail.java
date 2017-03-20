@@ -9,15 +9,13 @@ import org.rss_examples.rssmarveldemo.common.superclasses.MvlViewModel;
 import org.rss_examples.rssmarveldemo.contracts.CharacterDetailContract;
 import org.rss_examples.rssmarveldemo.data.MarvelRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import io.reactivex.Observer;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 public class VmCharacterDetail extends MvlViewModel<CharacterDetailContract.ICharacterDetailView> implements CharacterDetailContract.ICharacterDetailViewModel {
 
-    private List<Disposable> disposable = new ArrayList<>();
+    private CompositeDisposable compositeDisposable = new CompositeDisposable();
 
     @Override
     public void getCharacterData(String id) {
@@ -25,7 +23,7 @@ public class VmCharacterDetail extends MvlViewModel<CharacterDetailContract.ICha
                 .subscribe(new Observer<CharacterDto>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        disposable.add(d);
+                        compositeDisposable.add(d);
                     }
 
                     @Override
@@ -53,7 +51,7 @@ public class VmCharacterDetail extends MvlViewModel<CharacterDetailContract.ICha
                 .subscribe(new Observer<ComicsDto>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        disposable.add(d);
+                        compositeDisposable.add(d);
                     }
 
                     @Override
@@ -109,10 +107,9 @@ public class VmCharacterDetail extends MvlViewModel<CharacterDetailContract.ICha
 
     @Override
     public void unSubscribe () {
-        for (Disposable d : disposable) {
-            if (!d.isDisposed()) {
-                d.dispose();
-            }
+        if (compositeDisposable != null && !compositeDisposable.isDisposed()) {
+            compositeDisposable.dispose();
+            compositeDisposable = new CompositeDisposable();
         }
     }
 }

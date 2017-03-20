@@ -66,16 +66,9 @@ public class ComicDetailActivity extends MvlActivity implements ComicDetailContr
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        viewModel.getComicData(getIntent().getExtras().getString(EXTRA_COMIC_ID, ""));
-        viewModel.getComicsCharactersData(Integer.parseInt(getIntent().getExtras().getString(EXTRA_COMIC_ID, "")));
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
+    protected void onDestroy() {
+        super.onDestroy();
+        viewModel.unSubscribe();
     }
 
     @Override
@@ -94,6 +87,9 @@ public class ComicDetailActivity extends MvlActivity implements ComicDetailContr
                 getDrawable(this, R.drawable.animated_vector_drawable_start_to_end);
         reverseAnimatedVectorDrawable = (AnimatedVectorDrawable) ContextCompat.
                 getDrawable(this, R.drawable.animated_vector_drawable_end_to_start);
+
+        viewModel.getComicData(getIntent().getExtras().getString(EXTRA_COMIC_ID, ""));
+        viewModel.getComicsCharactersData(Integer.parseInt(getIntent().getExtras().getString(EXTRA_COMIC_ID, "")));
     }
 
     @Override

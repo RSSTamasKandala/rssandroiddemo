@@ -48,18 +48,12 @@ public class CharacterListFragment extends MvlFragment implements CharacterListC
         adapter = new MvlAdapter();
         binding.characterlist.setAdapter(adapter);
         binding.characterlist.addOnScrollListener(new LazyLoadingScrollListener(this));
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         viewModel.getCharacterList(0);
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onDestroyView() {
+        super.onDestroyView();
         viewModel.unSubscribe();
     }
 
