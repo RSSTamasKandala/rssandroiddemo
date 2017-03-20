@@ -40,6 +40,7 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
     private AnimatedVectorDrawable straightAnimatedVectorDrawable;
     private AnimatedVectorDrawable reverseAnimatedVectorDrawable;
     private AnimatedVectorDrawable currentDrawable;
+    private VmCharacterDetail viewModel;
 
     public static void startActivity(String characterID, String url, String name, View view, View textView) {
         Intent intent = new Intent(view.getContext(), CharacterDetailActivity.class);
@@ -64,18 +65,28 @@ public class CharacterDetailActivity extends MvlActivity implements CharacterDet
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        viewModel.getCharacterData(getIntent().getExtras().getString(EXTRA_CHARACTER_ID, ""));
+        viewModel.getCharactersComicsList(Integer.valueOf(getIntent().getExtras().getString(EXTRA_CHARACTER_ID, "")));
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        viewModel.unSubscribe();
+    }
+
+    @Override
     public void bindUI() {
         binding = DataBindingUtil.setContentView(this, R.layout.character_detail_activity);
-        VmCharacterDetail viewModel = new VmCharacterDetail();
+        viewModel = new VmCharacterDetail();
         viewModel.setView(this);
         binding.setCharacterDetail(viewModel);
 
         mvlAdapter = new MvlAdapter();
         binding.characterDetailBotList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         binding.characterDetailBotList.setAdapter(mvlAdapter);
-
-        viewModel.getCharacterData(getIntent().getExtras().getString(EXTRA_CHARACTER_ID, ""));
-        viewModel.getCharactersComicsList(Integer.valueOf(getIntent().getExtras().getString(EXTRA_CHARACTER_ID, "")));
 
         straightAnimatedVectorDrawable = (AnimatedVectorDrawable) ContextCompat.
                 getDrawable(this, R.drawable.animated_vector_drawable_start_to_end);

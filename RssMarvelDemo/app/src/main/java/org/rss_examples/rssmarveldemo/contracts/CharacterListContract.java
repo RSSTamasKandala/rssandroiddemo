@@ -15,5 +15,6 @@ public interface CharacterListContract {
 
     public interface IVmCharacterList extends IMvlViewModel{
         void getCharacterList(int skip);
+        void unSubscribe();
     }
 }

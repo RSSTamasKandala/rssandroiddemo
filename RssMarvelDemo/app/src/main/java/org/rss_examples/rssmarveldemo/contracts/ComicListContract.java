@@ -15,5 +15,6 @@ public interface ComicListContract {
 
     public interface IVmComicList extends IMvlViewModel {
         void getComicList(int skip);
+        void unSubscribe();
     }
 }

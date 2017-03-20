@@ -29,6 +29,7 @@ public interface ComicDetailContract {
         void onArrowClick(View view);
         String getPicUrl();
         String getTitle();
+        void unSubscribe();
     }
 
 }

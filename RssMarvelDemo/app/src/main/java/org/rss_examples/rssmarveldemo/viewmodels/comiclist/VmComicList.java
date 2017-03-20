@@ -17,6 +17,8 @@ import io.reactivex.disposables.Disposable;
 
 public class VmComicList extends MvlViewModel<ComicListContract.IComicListView> implements ComicListContract.IVmComicList {
 
+    private Disposable disposable;
+
     @Override
     public void getComicList(final int skip) {
         if (skip == 0) {
@@ -26,7 +28,7 @@ public class VmComicList extends MvlViewModel<ComicListContract.IComicListView> 
         MarvelRepository.getInstance().getComicList(skip, 20).subscribe(new Observer<ComicsDto>() {
             @Override
             public void onSubscribe(Disposable d) {
-
+                disposable = d;
             }
 
             @Override
@@ -54,5 +56,12 @@ public class VmComicList extends MvlViewModel<ComicListContract.IComicListView> 
 
             }
         });
+    }
+
+    @Override
+    public void unSubscribe() {
+        if (!disposable.isDisposed()) {
+            disposable.dispose();
+        }
     }
 }

@@ -26,5 +26,6 @@ public interface CharacterDetailContract {
         void onArrowClick(View view);
         void onBackClick(View view);
         String getName();
+        void unSubscribe();
     }
 }

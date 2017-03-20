@@ -21,11 +21,9 @@ import java.util.List;
 
 public class CharacterListFragment extends MvlFragment implements CharacterListContract.ICharacterListView, LazyLoadingScrollListener.OnLazyLoadingListener {
 
-
     private CharacterListBinding binding;
     private MvlAdapter adapter;
     private VmCharacterList viewModel;
-
 
     @Nullable
     @Override
@@ -49,9 +47,20 @@ public class CharacterListFragment extends MvlFragment implements CharacterListC
         binding.characterlist.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new MvlAdapter();
         binding.characterlist.setAdapter(adapter);
-        viewModel.getCharacterList(0);
         binding.characterlist.addOnScrollListener(new LazyLoadingScrollListener(this));
 
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        viewModel.getCharacterList(0);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        viewModel.unSubscribe();
     }
 
     @Override
