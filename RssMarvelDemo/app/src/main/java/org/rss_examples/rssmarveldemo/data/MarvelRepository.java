@@ -5,6 +5,7 @@ import android.support.annotation.WorkerThread;
 import com.karumi.marvelapiclient.CharacterApiClient;
 import com.karumi.marvelapiclient.ComicApiClient;
 import com.karumi.marvelapiclient.MarvelApiConfig;
+import com.karumi.marvelapiclient.MarvelApiException;
 import com.karumi.marvelapiclient.model.CharacterDto;
 import com.karumi.marvelapiclient.model.CharactersDto;
 import com.karumi.marvelapiclient.model.CharactersQuery;
@@ -155,12 +156,18 @@ public class MarvelRepository implements IMarvelRepository {
                                 .withOffset(skip)
                                 .build();
 
-                        MarvelResponse<CharactersDto> all = characterApiClient.getAll(query);
-                        if (all.getCode() == SUCCESS_CODE) {
-                            return all.getResponse();
-                        } else {
-                            throw new RestError(all.getCode());
+                        try {
+                            MarvelResponse<CharactersDto> all = characterApiClient.getAll(query);
+                            if (all.getCode() == SUCCESS_CODE) {
+                                return all.getResponse();
+                            } else {
+                                throw new RestError(all.getCode());
+                            }
+                        } catch (MarvelApiException e) {
+                            throw new RestError(e.getHttpCode());
                         }
+
+
                     }
                 })
                 .subscribeOn(Schedulers.io())
