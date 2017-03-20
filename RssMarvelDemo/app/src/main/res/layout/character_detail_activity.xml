@@ -35,7 +35,8 @@
                         android:id="@+id/character_detail_top_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:scaleType="fitXY" />
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/header_placeholder"/>
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -64,7 +65,7 @@
                     android:id="@+id/character_detail_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:background="@drawable/detail_info_top">
+                    android:background="@drawable/detail_comic_top">
 
                     <ImageView
                         android:id="@+id/character_detail_toolbar_image"
@@ -74,6 +75,7 @@
                         android:layout_marginRight="20dp"
                         android:background="@drawable/circle_shape"
                         android:padding="2dp"
+                        android:transitionName="@string/character_item_image"
                         bind:loadCircleImage="@{characterDetail.picUrl}" />
 
                     <TextView
@@ -86,7 +88,8 @@
                         android:lines="1"
                         android:textColor="@android:color/white"
                         android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:text="@{characterDetail.name}"
+                        android:transitionName="@string/character_item_text" />
 
                 </RelativeLayout>
 
@@ -127,7 +130,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:onClick="@{characterDetail.onArrowClick}"
-                        android:src="@drawable/vector_drawable_end" />
+                        android:src="@drawable/vector_drawable_start" />
 
                 </RelativeLayout>
 

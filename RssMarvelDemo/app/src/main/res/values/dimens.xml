@@ -2,4 +2,8 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="main_top_image">200dp</dimen>
+    <dimen name="character_comic_width">150dp</dimen>
+    <dimen name="character_comic_item_height">210dp</dimen>
+    <dimen name="shadow_padding">3dp</dimen>
 </resources>

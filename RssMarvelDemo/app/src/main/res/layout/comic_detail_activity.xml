@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
 
     <data>
 
@@ -31,12 +32,18 @@
                     android:layout_height="wrap_content">
 
                     <ImageView
-                        android:id="@+id/comic_detail_top_image"
                         android:layout_width="match_parent"
                         android:layout_height="150dp"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentTop="true" />
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/comic_placeholder"/>
+
+                    <ImageView
+                        android:id="@+id/comic_detail_top_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="150dp"
+                        android:layout_centerInParent="true"
+                        bind:loadImage="@{comicDetail.picUrl}"
+                        android:transitionName="@string/comic_item_image" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -79,10 +86,11 @@
                         android:layout_above="@+id/comic_detail_toolbar_anchor"
                         android:layout_marginLeft="20dp"
                         android:ellipsize="end"
+                        android:transitionName="@string/comic_item_text"
+                        android:text="@{comicDetail.title}"
                         android:lines="1"
                         android:textColor="@android:color/white"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:textSize="14sp"/>
 
                     <TextView
                         android:id="@+id/comic_detail_toolbar_writers"
@@ -135,7 +143,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:onClick="@{comicDetail.onArrowClick}"
-                        android:src="@drawable/vector_drawable_end" />
+                        android:src="@drawable/vector_drawable_start" />
 
                 </RelativeLayout>
 

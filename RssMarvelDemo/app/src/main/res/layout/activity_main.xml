@@ -22,7 +22,7 @@
                     android:layout_width="match_parent"
                     android:src="@drawable/marvel_logo"
                     android:scaleType="center"
-                    android:layout_height="200dp" />
+                    android:layout_height="@dimen/main_top_image" />
 
             </android.support.design.widget.CollapsingToolbarLayout>
 
