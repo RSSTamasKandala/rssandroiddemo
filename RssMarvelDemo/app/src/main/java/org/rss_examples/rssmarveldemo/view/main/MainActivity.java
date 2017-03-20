@@ -28,8 +28,6 @@ public class MainActivity extends MvlActivity implements MainContract.MainView {
     @Override
     public void bindUI() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        binding.toolbar.setTitle(getString(R.string.app_name));
-        setSupportActionBar(binding.toolbar);
         setupViewPager();
     }
 

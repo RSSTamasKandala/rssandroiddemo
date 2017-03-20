@@ -16,7 +16,7 @@ public class BindingUtil {
     public static void loadComicImage(ImageView imageView, String url) {
         Glide.with(imageView.getContext())
                 .load(url)
-                .placeholder(ContextCompat.getDrawable(imageView.getContext(), R.mipmap.ic_launcher))
+                .placeholder(ContextCompat.getDrawable(imageView.getContext(), R.drawable.portrait_placeholder))
                 .bitmapTransform(new CircleTransform(imageView.getContext()))
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
